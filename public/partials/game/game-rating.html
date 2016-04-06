@@ -1,0 +1,20 @@
+<div class="container" style="width:30%">
+    <table class="table">
+        <thead>
+            <tr>
+                <td>user</td>
+                <td class="text-right">score</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="user in vm.rating">
+                <td>{{user.username}}</td>
+                <td class="text-right">{{user.score}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+   <!-- <p class="text-center">
+        <h4 style="color: #00b3ee">Your score: {{vm.user.score}}</h4>
+    </p>-->
+</div>
