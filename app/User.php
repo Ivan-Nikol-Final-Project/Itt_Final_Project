@@ -30,7 +30,7 @@ class User extends Authenticatable
     }
     public function items()
     {
-        return $this->hasMany(\App\Item::class, 'users_items');
+        return $this->belongsToMany(\App\Item::class, 'users_items');
     }
     public function statistic()
     {

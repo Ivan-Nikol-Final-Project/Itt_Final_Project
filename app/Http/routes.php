@@ -33,6 +33,7 @@ Route::group([
     Route::get('/items/{item_id}' , 'ItemsController@show');
     Route::get('buyItem/{item_id}', 'UserController@buyItem');
     Route::get('scores' , 'StatisticsController@index');
+    Route::get('/users/{user_id}/items' , 'UserController@showUserItems');
 });
 
 
