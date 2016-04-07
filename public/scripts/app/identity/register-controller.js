@@ -5,7 +5,6 @@
         var vm = this;
 
         vm.register = function(user, registerForm) {
-            console.log(user);
             if(registerForm.$valid) {
                 auth.register(user)
                     .then(function () {

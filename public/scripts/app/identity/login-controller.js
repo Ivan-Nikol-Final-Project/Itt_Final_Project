@@ -5,7 +5,6 @@
         var vm = this;
 
         vm.login = function(user, loginForm) {
-            console.log(useer);
             if (loginForm.$valid) {
                 auth.login(user)
                    .then(function(){

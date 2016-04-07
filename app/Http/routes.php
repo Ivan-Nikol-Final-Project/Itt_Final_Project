@@ -23,19 +23,6 @@ Route::group(['prefix' => 'api/v1'], function(){
 
 });
 
-Route::group([
-    'prefix' => 'api/v1',
-    'middleware' => 'api'
-], function () {
-    Route::get('/users', 'UserController@index');
-    Route::get('/users/{user_id}' , 'UserController@show');
-    Route::get('/items', 'ItemsController@index');
-    Route::get('/items/{item_id}' , 'ItemsController@show');
-    Route::get('buyItem/{item_id}', 'UserController@buyItem');
-    Route::get('scores' , 'StatisticsController@index');
-    Route::get('/users/{user_id}/items' , 'UserController@showUserItems');
-});
-
 
 
 Route::group([
@@ -46,9 +33,8 @@ Route::group([
     Route::post('/login', 'AuthController@login');
     Route::post('/register', 'AuthController@registration');
 
-
     Route::group(['middleware' => 'api.auth'], function () {
-        Route::get('/token_test', function (){
+        Route::get('token_test', function (){
             return Auth::user();
         });
     });

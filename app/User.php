@@ -34,6 +34,6 @@ class User extends Authenticatable
     }
     public function statistic()
     {
-        return $this->hasMany(\App\Statistic::class, 'user_id');
+        return $this->belongsTo(\App\Statistic::class, 'user_id');
     }
 }

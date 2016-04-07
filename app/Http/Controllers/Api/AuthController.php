@@ -13,7 +13,6 @@ class AuthController extends Controller
 {
     public function login(Request $request)
     {
-       // dd($request);
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required',
@@ -39,17 +38,7 @@ class AuthController extends Controller
 
         $data = $request->all();
         $data['api_token'] = md5(microtime(true));
-        $data['money'] = 1000;
-        $data['is_admin'] = false;
         return User::create($data);
 
     }
-
-    public function getUser(Request $request, User $user)
-    {
-        $token = $request->token;
-        $user = User::where('api_token', '=' , $token)->first();
-        return $user;
-    }
-
 }

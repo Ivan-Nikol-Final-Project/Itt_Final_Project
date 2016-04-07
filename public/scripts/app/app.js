@@ -54,5 +54,5 @@
     angular.module('gameApp', ['ngRoute', 'ngCookies', 'gameApp.controllers'])
         .config(['$routeProvider', config])
         .run(['$http', '$cookies', 'auth', run])
-        .constant('baseUrl', '');
+        .constant('baseUrl', 'localhost:8000');
 })();

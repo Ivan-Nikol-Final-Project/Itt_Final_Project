@@ -1,12 +1,12 @@
 (function(){
     "use strict";
 
-    function GameController() {
+    function GameController(game) {
         var vm = this;
 
-        vm.game = 'This is the game';
+        game.startGame({gold: 100000});
     }
 
     angular.module('gameApp.controllers')
-        .controller('GameController', [GameController]);
+        .controller('GameController', ['game', GameController]);
 })();

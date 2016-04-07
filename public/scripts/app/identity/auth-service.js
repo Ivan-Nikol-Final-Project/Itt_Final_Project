@@ -7,7 +7,8 @@
         var register = function(user) {
             var defered = $q.defer();
 
-            $http.post(baseUrl + '/api/v1/register', { username: user.username, email: user.email, password:user.password})
+            $http.post(baseUrl + 'api/v1/register', { username: user.username, email: user.email,
+                password:user.password, password2: user.confirmPassword})
                 .then(function(){
                     defered.resolve(true);
                 }, function (err) {
@@ -21,7 +22,7 @@
             var deferred = $q.defer();
 
 
-            $http.post(baseUrl + '/users/login', {username: user.username, password: user.password })
+            $http.post(baseUrl + 'api/v1/login', {username: user.username, password: user.password })
                 .then(function (response) {
                     var tokenValue = response.access_token;
 
