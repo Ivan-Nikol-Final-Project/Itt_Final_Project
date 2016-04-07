@@ -38,6 +38,8 @@ class AuthController extends Controller
 
         $data = $request->all();
         $data['api_token'] = md5(microtime(true));
+        $data['money'] = 1000;
+        $data['is_admin'] = false;
         return User::create($data);
 
     }

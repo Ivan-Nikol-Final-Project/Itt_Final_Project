@@ -13,9 +13,7 @@ class ItemsController extends Controller
 {
     public function index(){
         $items = Item::all();
-        return Response::json([
-            'data' => $this->transformCollection($items)
-        ], 200);
+        return $items;
     }
 
 
@@ -44,10 +42,7 @@ class ItemsController extends Controller
             ], 422);
         }
         $item = Item::create($request->all());
-        return Response::json([
-            'message' => 'Item Created Succesfully',
-            'data' => $this->transform($item)
-        ]);
+        return $item;
     }
 
 
@@ -69,21 +64,8 @@ class ItemsController extends Controller
         $item->img_address = $request->img_address;
         $item->save();
 
-        return Response::json([
-            'message' => 'Item Updated Succesfully'
-        ]);
+        return $item;
     }
 
-    private function transformCollection($items){
-        return array_map([$this, 'transform'], $items->toArray());
-    }
 
-    private function transform($item)
-    {
-        return [
-            'name' => $item['name'],
-            'price' => $item['price'],
-            'description' => $item['description']
-        ];
-    }
-    }
+}
