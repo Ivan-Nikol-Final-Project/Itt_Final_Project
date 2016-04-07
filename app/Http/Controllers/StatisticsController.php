@@ -8,19 +8,15 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 
-class StatisticsController extends Controller
-{
+class StatisticsController extends Controller{
+
     public function index(Request $request)
     {
-      /*$users = User::where('is_admin',0 )
-          ->orderBy('id', 'desc')
-          ->get();*/
 
-        $users = Statistic::where('total_score', '>=', '0')
-            ->orderBy('total_score' , 'desc')
+        $users = Statistic::orderBy('total_score', 'desc')
+            ->join('users', 'users.id', '=', 'user_id')
+            ->take(10)
             ->get();
-
-
 
 
         return $users;
