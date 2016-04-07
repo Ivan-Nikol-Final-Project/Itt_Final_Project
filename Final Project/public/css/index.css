@@ -1,3 +1,39 @@
+* {
+    overflow: hidden;
+}
+body {
+    background-image: url('../assets/images/zombies-01.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 650px;
+    height: auto;
+    color: #fff;
+    z-index: -10;
+}
+#bg-color {
+    background-color: #000;
+    opacity: 0.30;
+    min-height: 650px;
+    min-width: 100%;
+    z-index: -5;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+#wrapper {
+    z-index: 1;
+}
+.navbar {
+    border-radius: 0;
+    font-size: 1.3em;
+}
+.navbar-transparent a {
+    color: #FFFFFF; !important;
+}
+/*#shop img {
+    opacity: 0.8;
+}*/
 .error {
     color: red;
 }
