@@ -21,6 +21,13 @@ class UserController extends Controller
 
     public function show($id)    {
         $user = User::find($id);
+        if(!$user){
+            return Response::json([
+                'error' => [
+                    'message' => 'User does not exist!'
+                ]
+            ], 404);
+        }
         return $user;
     }
 
@@ -28,11 +35,11 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $item = Item::find($id);
-        if($user->money >= $item->price) {
+        if($user->gold >= $item->price) {
             $user
                 ->items()
                 ->attach($item->id);
-            $user->money -= $item->price ;
+            $user->gold -= $item->price ;
         }
     }
 

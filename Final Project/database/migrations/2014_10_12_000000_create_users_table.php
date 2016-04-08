@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('is_admin')->default(0);
-            $table->unsignedBigInteger('money')->default(0);
+            $table->unsignedBigInteger('gold')->default(1000);
             $table->string('api_token', 32)->unique();
             $table->timestamps();
         });

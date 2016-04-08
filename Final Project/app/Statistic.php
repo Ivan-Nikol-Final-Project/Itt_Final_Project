@@ -9,10 +9,8 @@ class Statistic extends Model
     protected $fillable =
         [
             'user_id',
-            'total_score',
-            'games_played',
-            'games_won',
-            'games_lost'
+            'high_score',
+            'last_score'
         ];
     public function users()
     {

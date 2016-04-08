@@ -15,10 +15,8 @@ class CreateStatisticsTable extends Migration
         Schema::create('statistics', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('total_score');
-            $table->unsignedInteger('games_played');
-            $table->unsignedInteger('games_won')->default(0);
-            $table->unsignedInteger('games_lost')->default(0);
+            $table->unsignedInteger('high_score');
+            $table->unsignedInteger('last_score');
             $table
                 ->foreign('user_id')
                 ->references('id')

@@ -31,9 +31,10 @@ Route::group([
     Route::get('/users/{user_id}' , 'UserController@show');
     Route::get('/items', 'ItemsController@index');
     Route::get('/items/{item_id}' , 'ItemsController@show');
-    Route::get('buyItem/{item_id}', 'UserController@buyItem');
-    Route::get('scores' , 'StatisticsController@index');
+    Route::get('/buyItem/{item_id}', 'UserController@buyItem');
+    Route::get('/scores' , 'StatisticsController@index');
     Route::get('/users/{user_id}/items' , 'UserController@showUserItems');
+    Route::get('/results' , 'StatisticsController@update');
 });
 
 

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Item;
 
 use Illuminate\Http\Request;
@@ -11,16 +12,18 @@ use Illuminate\Support\Facades\Response;
 
 class ItemsController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $items = Item::all();
         return $items;
     }
 
 
-    public function show($id){
+    public function show($id)
+    {
         $item = Item::find($id);
 
-        if(!$item){
+        if (!$item) {
             return Response::json([
                 'error' => [
                     'message' => 'Item does not exist!'
@@ -34,7 +37,7 @@ class ItemsController extends Controller
     public function store(Request $request)
     {
 
-        if(! $request->name or ! $request->price or ! $request->description or ! $request->img_address){
+        if (!$request->name or !$request->price or !$request->description or !$request->img_address) {
             return Response::json([
                 'error' => [
                     'message' => 'Please Provide name, price and description and image!'
@@ -46,10 +49,9 @@ class ItemsController extends Controller
     }
 
 
-
     public function update(Request $request, $id)
     {
-        if(! $request->name or ! $request->price or ! $request->description or ! $request->img_address){
+        if (!$request->name or !$request->price or !$request->description or !$request->img_address) {
             return Response::json([
                 'error' => [
                     'message' => 'Please Provide name, price, description and image!'
