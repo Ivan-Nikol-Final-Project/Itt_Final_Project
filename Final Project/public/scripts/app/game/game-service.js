@@ -45,7 +45,7 @@
                         _this.lauphing(_this.game);
                     }, 5000);
 
-                    this.createZombieInterval = window.setInterval(function () {
+                    _this.createZombieInterval = window.setInterval(function () {
 
                         quantity += 1;
 
@@ -66,14 +66,24 @@
                             clearInterval(_this.playLaughInterval);
                             //todo you win
                         }
+
+                        if(maxZombieInHome < 0) {
+                            clearInterval(_this.createZombieInterval);
+                            clearInterval(_this.playLaughInterval);
+                        }
                     }, interval);
                 },
                 createZombie: function(game, quantity) {
+
+                    if(maxZombieInHome <= 0) {
+                        return;
+                    }
+
                     for(var i = 0; i < quantity; i++) {
                         var x = game.rnd.integerInRange(game.world.width, game.world.width + 200);
                         var y = game.rnd.integerInRange(100, game.world.height - 100);
 
-                        var zombie = game.zombies.create(x, y, 'zombie');
+                        var zombie = game.zombies.create(x, y, 'walkingZombie');
                         zombie.anchor.setTo(0.5, 0.5);
 
                         zombie.checkWorldBounds = true;
@@ -82,6 +92,9 @@
                         zombie.isAlive = true;
                         zombie.health = this.health;
                         zombie.body.velocity.setTo(this.zombieVelocity, 0);
+
+                        var anim = zombie.animations.add('zombieWalk', [0, 1, 2, 3, 4, 5], 5, true);
+                        zombie.animations.play('zombieWalk');
                     }
 
                     if(quantity % 3 == 0) {
@@ -89,6 +102,9 @@
                     }
                 },
                 lauphing: function(game) {
+                    if(maxZombieInHome <= 0) {
+                        return;
+                    }
                     game.audio.zombieLaugh.play();
                 }
             };
@@ -155,11 +171,13 @@
                 game.load.image('whiteRadishIcon', 'assets/game/images/white-radish-icon.png');
                 game.load.image('zombieInHome', basePathImage + 'zombie-in-home.png');
                 game.load.spritesheet('explosion', 'assets/game/images/explode.png', 128, 128);
+                game.load.spritesheet('walkingZombie', basePathImage + 'walking-zombie-01.png', 65, 65);
 
 
                 game.load.audio('zombieDie', 'assets/game/sounds/zombieInPain.mp3');
                 game.load.audio('monsterLaugh', 'assets/game/sounds/monsterLaugh');
-                game.load.audio('gameAudio1', 'assets/game/sounds/cerebrawl.mp3');
+                game.load.audio('gameAudio1', basePathAudio + 'cerebrawl.mp3');
+                game.load.audio('gameAudio2', basePathAudio + 'watery-graves.mp3');
                 game.load.audio('zombiesCome', 'assets/game/sounds/monsterGrowl.mp3');
                 game.load.audio('zombieLaugh', 'assets/game/sounds/zombieLaugh.mp3');
                 game.load.audio('shoot', 'assets/game/sounds/shoot.ogg');
@@ -167,6 +185,7 @@
                 game.load.audio('explosionAudio', basePathAudio + 'explosion.mp3');
             }
 
+            var user = user.username;
             var bulletSpeed = 500;
             var numberOfBullets = 100;
             var numberOfRedBullets = 100;
@@ -176,7 +195,6 @@
             var peaAvailable = 5;
             var peaMonsterAvailable = 1;
             var whiteRadishBombAvailable = 3;
-            var whiteRadishBombInAction = 0;
             var maxZombieInHome = 10;
             var peaMonster;
             var explosions;
@@ -184,23 +202,16 @@
 
             var scoreString = 'Score : ';
             var scoreText;
-
-            var bulletString = 'Pea bullets: ';
             var bulletText;
-
-            var redBulletString = 'Flower bullets: ';
             var redBulletText;
-
-            var monsterPeaBulletsString = 'Monster bullets: ';
             var monsterPeaBulletsText;
-
-            var goldString = 'Gold: ';
             var goldText;
-
             var availablePeaText;
             var peaMonsterAvailableText;
             var whiteRadishBombText;
             var maxZombieInHomeText;
+            var stateText;
+            /*var userText;*/
 
             var buyBulletsButton;
             var buyRedBulletsButton;
@@ -214,27 +225,36 @@
             var flowerFireLastTime = 0;
             var peaMonsterFireLastTime = 0;
 
-            var mode = 'addPea';
+            var mode = '';
 
             var zombieFactory = null;
             var bulletsFactory = null;
 
-            var font = { font: '22px Arial', fill: '#fff' };
+            var font = { font: '22px Inconsolata', fill: '#fff' };
+            var stateFont = { font: '48px Inconsolata', fill: '#fff'};
 
             function create() {
 
                 game.add.tileSprite(0, 0, 1000, 800, 'grass');
 
+                /*userText = game.add.text(game.world.width - user.length * 15,
+                    game.world.height - 30, user, font);*/
                 goldText = game.add.text(40, 10, gold, font);
-                scoreText = game.add.text(game.world.centerX - 100, 10, scoreString + score, font);
+                scoreText = game.add.text(game.world.centerX, 25, scoreString + score, font);
+                scoreText.anchor.setTo(0.5, 0.5);
                 bulletText = game.add.text(game.world.width - 80, 10, numberOfBullets, font);
                 redBulletText = game.add.text(game.world.width - 80, 40, numberOfRedBullets, font);
                 monsterPeaBulletsText = game.add.text(game.world.width - 80, 70, numberOfMonsterPeaBullets, font);
-                maxZombieInHomeText = game.add.text(40, game.world.height - 30, maxZombieInHome, font);
+                maxZombieInHomeText = game.add.text(40, game.world.height - 40, maxZombieInHome, font);
 
-                availablePeaText = game.add.text(40, 50, peaAvailable, font);
-                peaMonsterAvailableText = game.add.text(90, 50, peaMonsterAvailable, font);
-                whiteRadishBombText = game.add.text(140, 50, whiteRadishBombAvailable, font);
+                availablePeaText = game.add.text(40, 40, peaAvailable, font);
+                peaMonsterAvailableText = game.add.text(90, 40, peaMonsterAvailable, font);
+                whiteRadishBombText = game.add.text(140, 40, whiteRadishBombAvailable, font);
+
+                stateText = game.add.text(game.world.centerX, game.world.centerY, ' ', stateFont);
+                stateText.anchor.setTo(0.5, 0.5);
+                stateText.visible = false;
+
 
                 game.zombies = game.add.physicsGroup(Phaser.Physics.ARCADE, game.world, 'zombies');
                 game.plants = game.add.physicsGroup(Phaser.Physics.ARCADE, game.world, 'plants');
@@ -249,7 +269,8 @@
                 game.audio = {};
                 game.audio.zombieDie = game.add.audio('zombieDie');
                 game.audio.monsterLaugh = game.add.audio('monsterLaugh');
-                game.audio.gamePlay = game.add.audio('gameAudio1');
+                game.audio.gamePlay = game.add.audio('gameAudio2');
+                game.audio.gameOverAudio = game.add.audio('gameAudio1');
                 game.audio.zombiesCome = game.add.audio('zombiesCome');
                 game.audio.zombieLaugh = game.add.audio('zombieLaugh');
                 game.audio.shoot = game.add.audio('shoot');
@@ -259,9 +280,9 @@
                 buyBulletsButton = game.add.button(game.world.width - 120, 10, 'bullet', buyBullets, this);
                 buyRedBulletsButton = game.add.button(game.world.width - 115, 40, 'redBullet', buyRedBullets, this);
                 buyMonsterBulletsButton = game.add.button(game.world.width - 110, 70, 'monsterPeaBullet', buyMonsterBullets, this);
-                peaModeBtn = game.add.button(10, 50, 'peaIcon', addPeaMode, this);
-                peaMonsterModeBTtn = game.add.button(70, 50, 'peaMonsterIcon', addMonsterPeaMode, this);
-                whiteRadishModeBtn = game.add.button(120, 50, 'whiteRadishIcon', addWhiteRadishMode, this);
+                peaModeBtn = game.add.button(10, 40, 'peaIcon', addPeaMode, this);
+                peaMonsterModeBTtn = game.add.button(70, 40, 'peaMonsterIcon', addMonsterPeaMode, this);
+                whiteRadishModeBtn = game.add.button(120, 40, 'whiteRadishIcon', addWhiteRadishMode, this);
 
                 goldImage = game.add.image(10, 10, 'gold');
                 zombieInHomeImage = game.add.image(10, game.world.height - 40, 'zombieInHome');
@@ -283,7 +304,11 @@
 
             function update() {
 
-                fireFlower();
+                if(maxZombieInHome <= 0) {
+                    gameOver();
+                }
+
+                /*fireFlower();*/
 
                 if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
                     fireMonsterPea();
@@ -296,7 +321,19 @@
                 game.physics.arcade.overlap(game.bullets, game.zombies, hitZombie, null, this);
                 game.physics.arcade.overlap(game.redBullets, game.zombies, hitZombie, null, this);
                 game.physics.arcade.overlap(game.monsterBullets, game.zombies, hitZombie, null, this);
+
                 updateInfo();
+            }
+
+            function gameOver() {
+                game.flowers.remove(flower);
+                game.zombies.forEach(function(zombie){
+                    game.zombies.remove(zombie);
+                });
+                stateText.text = 'GAME OVER';
+                stateText.visible = true;
+                game.audio.gamePlay.stop();
+                mode = 'disable';
             }
 
             function updateInfo() {
@@ -324,15 +361,22 @@
             }
 
             function addPeaMode() {
-                mode = 'addPea';
+                if(mode != 'disable') {
+                    mode = 'addPea';
+                }
             }
 
+
             function addMonsterPeaMode() {
-                mode = 'addMonsterPea';
+                if(mode != 'disable') {
+                    mode = 'addMonsterPea';
+                }
             }
 
             function addWhiteRadishMode() {
-                mode = 'addWhiteRadish';
+                if(mode != 'disable') {
+                    mode = 'addWhiteRadish';
+                }
             }
 
             function addWhiteRadish() {
@@ -398,6 +442,10 @@
 
             function buyBullets() {
 
+                if(mode == 'disable') {
+                    return;
+                }
+
                 if(gold < 100) {
                     return;
                 }
@@ -408,6 +456,10 @@
 
             function buyRedBullets() {
 
+                if(mode == 'disable') {
+                    return;
+                }
+
                 if(gold < 100) {
                     return;
                 }
@@ -417,6 +469,10 @@
             }
 
             function buyMonsterBullets() {
+
+                if(mode == 'disable') {
+                    return;
+                }
 
                 if(gold < 300) {
                     return;
@@ -525,7 +581,7 @@
                     plant.kill();
                     clearInterval(plant.shootingInterval);
                     zombie.isAlive = false;
-                    zombie.body.velocity.setTo(150, -150);
+                    zombie.body.velocity.setTo(-150, -150);
                     game.add.tween(zombie).to( { angle: 3600 }, 10000, Phaser.Easing.Linear.None, true);
                     game.audio.zombieDie.play();
                     peaAvailable += 1;
@@ -535,7 +591,7 @@
             function flowerKillZombie(flower, zombie) {
                 if(zombie.isAlive) {
                     game.audio.zombieDie.play();
-                    zombie.body.velocity.setTo(0, +150);
+                    zombie.body.velocity.setTo(-150, -150);
                     game.add.tween(zombie).to( { angle: 3600 }, 10000, Phaser.Easing.Linear.None, true);
                     numberOfRedBullets = 0;
                     zombie.isAlive = false;
@@ -567,6 +623,10 @@
 
             function explosion(whiteRadish, zombie) {
 
+                if(!zombie.isAlive) {
+                   return;
+                }
+
                 var explosion = game.explosions.getFirstDead();
                 explosion.reset(whiteRadish.position.x - 50, whiteRadish.position.y - 50);
                 explosion.frame = 0;
@@ -592,6 +652,10 @@
                         score += 100;
                     }else {
                         maxZombieInHome -= 1;
+                        if(maxZombieInHome < 1) {
+                            maxZombieInHome = 0;
+                            game.audio.gameOverAudio.play();
+                        }
                     }
                     game.zombies.remove(zombie);
                 }

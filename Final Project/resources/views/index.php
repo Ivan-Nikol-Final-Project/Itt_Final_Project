@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Inconsolata:400,700' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/index.css">
     <script src="//cdn.jsdelivr.net/phaser/2.2.2/phaser.min.js"></script>
     <!--<script src="node_modules/phaser/dist/phaser.min.js"></script>-->
