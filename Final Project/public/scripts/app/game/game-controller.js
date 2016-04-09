@@ -4,7 +4,7 @@
     function GameController(game) {
         var vm = this;
 
-        game.startGame({gold: 100000, username: 'Pesho fwefwergreeebreertbgetb'});
+        game.startGame({gold: 100000, username: 'Pesho'});
     }
 
     angular.module('gameApp.controllers')
