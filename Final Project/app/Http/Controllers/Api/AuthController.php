@@ -46,7 +46,7 @@ class AuthController extends Controller
 
     }
 
-    public function getUser(Request $request, User $user)
+    public function getUser(Request $request)
     {
         $token = $request->token;
         $user = User::where('api_token', '=' , $token)->first();

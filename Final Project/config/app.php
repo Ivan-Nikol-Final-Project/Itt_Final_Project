@@ -147,6 +147,10 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Anouar\Paypalpayment\PaypalpaymentServiceProvider::class,
+      //  Ignited\LaravelOmnipay\LaravelOmnypayServiceProvider::class,
+
+
 
         /*
          * Application Service Providers...
@@ -201,7 +205,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Paypalpayment'   => Anouar\Paypalpayment\Facades\PaypalPayment::class,
+       // 'Omnipay' => Ignited\LaravelOmnipay\Facades\OmnipayFacade::class,
     ],
 
 ];

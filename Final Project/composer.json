@@ -6,7 +6,13 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.2.*"
+        "laravel/framework": "5.2.*",
+        "anouar/paypalpayment": "~1.0",
+        "omnipay/paypal": "~2.0"
+
+
+        
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

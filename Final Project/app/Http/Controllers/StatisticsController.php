@@ -19,12 +19,22 @@ class StatisticsController extends Controller{
             ->take(10)
             ->get();
 
-
-
-        return $users;
+        return $this->transformCollection($users);
     }
 
-    public function update(Request $request, $id)
+    private function transformCollection($users){
+        return array_map([$this, 'transform'], $users->toArray());
+    }
+
+    private function transform($user){
+        return [
+            'username' => $user['username'],
+            'high_score' => $user['high_score'],
+        ];
+    }
+
+
+    public function update(Request $request)
     {
         if (!$request->id or !$request->high_score or !$request->last_score) {
             return Response::json([
@@ -34,14 +44,14 @@ class StatisticsController extends Controller{
             ], 422);
         }
 
-        $user = User::find($id);
-        if($user->high_score < $request->last_score)
+        $user = Statistic::where('user_id', '=', $request->id)->first();
+        if($user['high_score'] < $request->last_score)
         {
-            $user->high_score = $request->last_score;
-            $user->last_score = $request->last_Score;
+            $user['high_score'] = $request->last_score;
+            $user['last_score'] = $request->last_Score;
         }
 
-        $user->last_score = $request->last_score;
+        $user['last_score'] = $request->last_score;
         $user->save();
 
         return $user;

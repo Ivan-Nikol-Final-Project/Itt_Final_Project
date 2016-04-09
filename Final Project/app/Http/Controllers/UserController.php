@@ -31,17 +31,17 @@ class UserController extends Controller
         return $user;
     }
 
-    public function buyItem($id)
+   /* public function buyItem($id)
     {
         $user = Auth::user();
         $item = Item::find($id);
-        if($user->gold >= $item->price) {
+        if($user['gold'] >= $item['price']) {
             $user
                 ->items()
                 ->attach($item->id);
-            $user->gold -= $item->price ;
+            $user['gold'] -= $item->price ;
         }
-    }
+    }*/
 
     public function showUserItems($id)
     {
