@@ -19,7 +19,7 @@
             },
             setUser: function (response) {
                 $cookies.putObject('user', response.data);
-                deferred.resolve(response);
+                deferred.resolve(response.data);
             },
             removeUser: function () {
                 $cookies.remove('user');

@@ -34,9 +34,6 @@
                     identity.setUser(response);
                     deferred.resolve(response);
 
-                    /*getIdentity().then(function () {
-                        deferred.resolve(response);
-                    });*/
                 }, function (err) {
                     deferred.reject(err);
                 });
@@ -45,22 +42,9 @@
             return deferred.promise;
         };
 
-        var getIdentity = function () {
-            var deferred = $q.defer();
-
-            $http.get(baseUrl + '/users/identity')
-                .then(function (identityResponse) {
-                    identity.setUser(identityResponse);
-                    deferred.resolve(identityResponse);
-                });
-
-            return deferred.promise;
-        };
-
         return {
             register: register,
             login: login,
-            getIdentity: getIdentity,
             isAuthenticated: function () {
                 return !!$cookies.get(TOKEN_KEY);
             },

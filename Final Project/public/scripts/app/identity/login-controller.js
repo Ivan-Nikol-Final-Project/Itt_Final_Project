@@ -9,11 +9,10 @@
             if (loginForm.$valid) {
                 auth.login(user)
                    .then(function(){
-                       $location.path('/game/start');
+                       $location.path('/');
                    });
             }
         }
-
     }
 
     angular.module('gameApp.controllers')

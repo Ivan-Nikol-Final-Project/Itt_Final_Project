@@ -12,16 +12,6 @@
             waitForLogin();
         };
 
-        /*vm.getRating = function () {
-            game.getRating()
-                .then(function(rating){
-                    vm.rating = rating;
-                }, function(err) {
-                    //TODO
-                });
-        };*/
-
-
         function waitForLogin() {
             identity.getUser()
                 .then(function(user) {

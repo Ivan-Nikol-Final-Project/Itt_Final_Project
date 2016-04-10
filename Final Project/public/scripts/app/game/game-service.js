@@ -139,8 +139,6 @@
                         if(maxZombieInHome < 0) {
                             clearInterval(_this.createZombieInterval);
                             clearInterval(_this.playLaughInterval);
-                            gameState = 'gameOver';
-                            gameOver();
                         }
 
                         _this.createZombie(_this.game, quantity);
@@ -671,6 +669,7 @@
                     flyTexts(100, x, y);
                     zombie.isAlive = false;
                     score += 100;
+                    gold += 20;
                 }
 
                 if(!isGetBonus) {
@@ -692,6 +691,7 @@
                 var x = zombie.position.x;
                 var y = zombie.position.y;
                 score += 100;
+                gold += 20;
                 if(!isGetBonus) {
                     getBonus();
                 }
@@ -729,6 +729,7 @@
                 x = zombie.position.x;
                 y = zombie.position.y;
                 score += 100;
+                gold += 20;
                 flyTexts(100, x, y);
                 zombie.isAlive = false;
                 zombie.body.velocity.setTo(0, -150);
@@ -740,22 +741,20 @@
             function zombieOut(zombie) {
 
                 if(zombie.x <= 0 || zombie.y <= 10 || zombie.y >= game.world.height) {
-                    if(zombie.y <= 10 || zombie.y >= game.world.height) {
-                        gold += 20;
+                    
+                    if(zombie.x <= 0){
 
-                        if(!isGetBonus) {
-                            getBonus();
-                        }
+                        if(gameState != 'gameOver') {
+                            maxZombieInHome -= 1;
 
-                    }
-                    else if(zombie.x <= 0){
-                        maxZombieInHome -= 1;
-                        if(maxZombieInHome < 1) {
-                            maxZombieInHome = 0;
-                            gameState = 'gameOver';
-                            gameOver();
+                            if(maxZombieInHome < 1) {
+                                maxZombieInHome = 0;
+                                gameState = 'gameOver';
+                                gameOver();
+                            }
                         }
                     }
+
                     game.zombies.remove(zombie);
                 }
 
@@ -777,7 +776,6 @@
 
             function gameOver() {
 
-                game.flowers.remove(flower);
                 game.zombies.forEach(function(zombie){
                     game.zombies.remove(zombie);
                 });
@@ -802,7 +800,6 @@
             }
 
             function victory() {
-                game.flowers.remove(flower);
                 game.zombies.forEach(function(zombie){
                     game.zombies.remove(zombie);
                 });

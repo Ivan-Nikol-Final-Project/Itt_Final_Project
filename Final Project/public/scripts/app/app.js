@@ -43,7 +43,6 @@
     function  run($http, $cookies, auth) {
         if(auth.isAuthenticated()) {
             $http.defaults.headers.common.Authorization = 'X-Api-Token ' + $cookies.get('authentication');
-            auth.getIdentity();
         }
     }
 
