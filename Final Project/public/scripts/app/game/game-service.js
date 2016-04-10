@@ -741,7 +741,7 @@
             function zombieOut(zombie) {
 
                 if(zombie.x <= 0 || zombie.y <= 10 || zombie.y >= game.world.height) {
-                    
+
                     if(zombie.x <= 0){
 
                         if(gameState != 'gameOver') {

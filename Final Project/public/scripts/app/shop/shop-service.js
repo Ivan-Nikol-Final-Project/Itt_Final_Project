@@ -6,10 +6,12 @@
         function buy(item, user) {
             var deferred = $q.defer();
 
-            $http.post(baseUrl + '/shop', {
-                username: user.username,
-                password: user.password,
-                item: item
+            $http.post(baseUrl + '/api/v1/payment', {
+                id: user.id,
+                name: item,
+                price: 1.00,
+                currency: 'EUR',
+                gold: 100
             }).then(function(response){
                 deferred.resolve(response);
             }, function(err){
