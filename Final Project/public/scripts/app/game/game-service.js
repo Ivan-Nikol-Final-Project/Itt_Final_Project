@@ -1,7 +1,7 @@
 (function(){
     "use strict";
 
-    function GameService($http, $q, baseUrl) {
+    function GameService($http, $q, baseUrl, identity) {
 
         function getRating() {
             var deferred = $q.defer();
@@ -29,9 +29,19 @@
                 }, function (err) {
                     deferred.reject(err);
                 });
+
+            return deferred.promise;
         }
 
-        function startGame(user) {
+        function startGame() {
+
+            var user ={};
+            identity.getUser()
+                .then(function(response) {
+                user = response;
+                console.log(user);
+            })
+
             var gold = user.gold || 1000;
             var score = 0;
             var bulletSpeed = 500;
@@ -871,6 +881,6 @@
     }
 
     angular.module('gameApp.services')
-        .factory('game', ['$http', '$q', 'baseUrl',  GameService]);
+        .factory('game', ['$http', '$q', 'baseUrl', 'identity',  GameService]);
 
 })();
