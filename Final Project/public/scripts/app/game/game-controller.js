@@ -1,13 +1,20 @@
 (function(){
     "use strict";
 
-    function GameController(game) {
+    function GameController(game, identity) {
         var vm = this;
 
-        vm.startGame = game.startGame;
+        vm.startGame = function() {
+            var currentUser;
+            identity.getUser()
+                .then(function(user){
+                    game.startGame(user);
+                    currentUser = user;
+                });
+        };
 
     }
 
     angular.module('gameApp.controllers')
-        .controller('GameController', ['game', GameController]);
+        .controller('GameController', ['game','identity', GameController]);
 })();

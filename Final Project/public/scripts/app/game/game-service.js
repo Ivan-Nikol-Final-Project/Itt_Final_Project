@@ -19,12 +19,15 @@
         function sendResult(user) {
             var deferred = $q.defer();
 
+            console.log('Send user id: ' + user.id + 'user last score: ' + user.lastScore);
+
             $http.put(baseUrl + '/api/v1/update/results',
                 {
                     id: user.id,
                     lastScore: user.lastScore
                 })
                 .then(function(response){
+                    console.log(response);
                     deferred.resolve(response);
                 }, function (err) {
                     deferred.reject(err);
@@ -33,16 +36,13 @@
             return deferred.promise;
         }
 
-        function startGame() {
+        function startGame(user) {
 
-            var user ={};
-            identity.getUser()
-                .then(function(response) {
-                user = response;
-                console.log(user);
-            })
+            user = user || 'guest';
 
-            var gold = user.gold || 1000;
+            console.log(user);
+
+            var gold = user.gold || 500;
             var score = 0;
             var bulletSpeed = 500;
             var numberOfBullets = 100;
@@ -795,6 +795,10 @@
                 game.audio.gamePlay.stop();
                 game.audio.gameOverAudio.play();
                 mode = 'disable';
+                sendResult({
+                    id: user.id,
+                    lastScore: score
+                });
             }
 
             function victory() {
