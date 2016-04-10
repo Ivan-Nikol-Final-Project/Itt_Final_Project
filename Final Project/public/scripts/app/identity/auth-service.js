@@ -20,17 +20,19 @@
         var login = function login(user) {
             var deferred = $q.defer();
 
-
             $http.post(baseUrl + '/api/v1/login', {username: user.username, password: user.password })
                 .then(function (response) {
-                    var tokenValue = response.access_token;
+                    var tokenValue = response.data.api_token;
 
                     var theBigDay = new Date();
                     theBigDay.setHours(theBigDay.getHours() + 72);
 
                     $cookies.put(TOKEN_KEY, tokenValue, { expires: theBigDay });
 
-                    $http.defaults.headers.common.Authorization = 'Bearer ' + tokenValue;
+                    $http.defaults.headers.common.Authorization = 'X-Api-Token ' + tokenValue;
+
+                    identity.setUser(response);
+                    deferred.resolve(response);
 
                     /*getIdentity().then(function () {
                         deferred.resolve(response);

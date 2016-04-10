@@ -15,7 +15,7 @@
     <script src="node_modules/angular-route/angular-route.min.js"></script>
     <script src="node_modules/angular-cookies/angular-cookies.min.js"></script>
 </head>
-<body ng-app="gameApp" ng-controller="MainController as vm">
+<body ng-app="gameApp" ng-cloak ng-controller="MainController as vm">
 
 <div id="bg-color"></div>
 

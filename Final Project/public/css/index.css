@@ -21,6 +21,10 @@ body {
     top: 0px;
     left: 0px;
 }
+#startBtn {
+    width: 200px;
+    margin-top: 40%;
+}
 #wrapper {
     z-index: 1;
 }
@@ -31,9 +35,12 @@ body {
 .navbar-transparent a {
     color: #FFFFFF; !important;
 }
-/*#shop img {
-    opacity: 0.8;
-}*/
+.navbar-transparent .navbar-nav > li > a:hover,
+.navbar-transparent .navbar-nav > li > a:focus {
+    background-color: transparent;
+}
 .error {
     color: red;
 }
+
+

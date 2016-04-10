@@ -1,27 +1,28 @@
 (function () {
     'use strict';
 
-    var identityService = function identityService($q) {
-        var currentUser = {};
+    var identityService = function identityService($q, $cookies) {
         var deferred = $q.defer();
+        var theBigDay = new Date();
+        theBigDay.setHours(theBigDay.getHours() + 72);
 
         return {
             getUser: function () {
                 if (this.isAuthenticated()) {
-                    return $q.resolve(currentUser);
+                    return $q.resolve($cookies.getObject('user'));
                 }
 
                 return deferred.promise;
             },
             isAuthenticated: function () {
-                return Object.getOwnPropertyNames(currentUser).length !== 0;
+                return $cookies.get('authentication');
             },
             setUser: function (user) {
-                currentUser = user;
+                $cookies.putObject('user', user);
                 deferred.resolve(user);
             },
             removeUser: function () {
-                currentUser = {};
+                $cookies.remove('user');
                 deferred = $q.defer();
             }
         };
@@ -29,5 +30,5 @@
 
     angular
         .module('gameApp.services')
-        .factory('identity', ['$q', identityService]);
+        .factory('identity', ['$q', '$cookies', identityService]);
 }());

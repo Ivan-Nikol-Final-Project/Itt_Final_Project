@@ -9,7 +9,7 @@
             if (loginForm.$valid) {
                 auth.login(user)
                    .then(function(){
-                       $location.path('/');
+                       $location.path('/game/start');
                    });
             }
         }

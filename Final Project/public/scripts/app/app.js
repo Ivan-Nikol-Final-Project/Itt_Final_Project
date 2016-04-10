@@ -42,7 +42,7 @@
 
     function  run($http, $cookies, auth) {
         if(auth.isAuthenticated()) {
-            $http.defaults.headers.common.Authorization = 'Bearer ' + token$cookies.get('authentication');
+            $http.defaults.headers.common.Authorization = 'X-Api-Token ' + $cookies.get('authentication');
             auth.getIdentity();
         }
     }
