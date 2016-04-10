@@ -7,7 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Response;
+
 
 
 class StatisticsController extends Controller{
@@ -38,22 +38,16 @@ class StatisticsController extends Controller{
 
     public function update(Request $request)
     {
-        if (!$request->id  or !$request->last_score) {
-            return Response::json([
-                'error' => [
-                    'message' => 'Please user id, high_score and last_score!'
-                ]
-            ], 422);
-        }
+
 
         $stat = Statistic::where('user_id', '=', $request->id)->first();
-        if($stat['high_score'] < $request->last_score)
+        if($stat['high_score'] < $request->lastScore)
         {
-            $stat['high_score'] = $request->last_score;
-            $stat['last_score'] = $request->last_Score;
+            $stat['high_score'] = $request->lastScore;
+            $stat['last_score'] = $request->lastScore;
         }
 
-        $stat['last_score'] = $request->last_score;
+        $stat['last_score'] = $request->lastScore;
         $stat->save();
 
         $user = User::where('id', '=', $request->id)->first();
