@@ -25,7 +25,7 @@
     };
 
     angular.module('gameApp.services')
-        .factory('shop', ['$http', '$q', 'baseUrl', ShopService])
+        .factory('shop', ['$http', '$q', 'baseUrl', ShopService]);
 
 })();
 

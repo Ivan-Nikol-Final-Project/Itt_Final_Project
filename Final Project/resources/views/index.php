@@ -68,6 +68,7 @@
     <script src="scripts/app/identity/auth-service.js"></script>
     <script src="scripts/app/identity/identity-service.js"></script>
     <script src="scripts/app/game/game-service.js"></script>
+    <script src="scripts/app/shop/shop-service.js"></script>
 
     <script src="scripts/app/home/home-controller.js"></script>
     <script src="scripts/app/identity/register-controller.js"></script>
