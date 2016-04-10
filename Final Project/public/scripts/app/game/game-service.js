@@ -6,7 +6,7 @@
         function getRating() {
             var deferred = $q.defer();
 
-            $http.get(baseUrl + '/rating')
+            $http.get(baseUrl + '/api/v1/scores')
                 .then(function (response){
                     deferred.resolve(response);
                 }, function(err){
@@ -14,6 +14,21 @@
                 });
 
             return deferred.promise;
+        }
+
+        function sendResult(user) {
+            var deferred = $q.defer();
+
+            $http.put(baseUrl + '/api/v1/update/results',
+                {
+                    id: user.id,
+                    lastScore: user.lastScore
+                })
+                .then(function(response){
+                    deferred.resolve(response);
+                }, function (err) {
+                    deferred.reject(err);
+                });
         }
 
         function startGame(user) {

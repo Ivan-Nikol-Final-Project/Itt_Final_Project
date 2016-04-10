@@ -17,9 +17,9 @@
             isAuthenticated: function () {
                 return $cookies.get('authentication');
             },
-            setUser: function (user) {
-                $cookies.putObject('user', user);
-                deferred.resolve(user);
+            setUser: function (response) {
+                $cookies.putObject('user', response.data);
+                deferred.resolve(response);
             },
             removeUser: function () {
                 $cookies.remove('user');

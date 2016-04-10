@@ -6,7 +6,6 @@
 
         vm.startGame = game.startGame;
 
-        /*game.startGame({gold: 100000, username: 'Pesho'});*/
     }
 
     angular.module('gameApp.controllers')
