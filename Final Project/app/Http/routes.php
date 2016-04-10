@@ -21,7 +21,6 @@ Route::group([
     Route::get('/users', 'UserController@index');
     Route::get('/users/{user_id}' , 'UserController@show');
     Route::get('/scores' , 'StatisticsController@index');
-    Route::post('/updateResults' , 'StatisticsController@update');
     Route::post('/payment' , 'PaymentController@postPayment');
     Route::get('/payment_success', 'PaymentController@getSuccessPayment');
     Route::get('/cancel_order', function(){
@@ -37,6 +36,8 @@ Route::group([
     ], function () {
         Route::post('/login', 'AuthController@login');
         Route::post('/register', 'AuthController@registration');
+        Route::put('/update/results' , 'StatisticsController@update');
+
        // Route::post('/game', 'AuthController@getUser');
     });
 

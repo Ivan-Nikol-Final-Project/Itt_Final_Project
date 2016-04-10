@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+use App\Statistic;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -42,14 +43,19 @@ class AuthController extends Controller
         $data['gold'] = 1000;
         $data['api_token'] = md5(microtime(true));
         $data['is_admin'] = false;
-        return User::create($data);
+
+        $user = User::create($data);
+        $statistic['user_id'] = $user['id'];
+        $statistic = Statistic::create($statistic);
+
+        return $user;
 
     }
 
     public function getUser(Request $request)
     {
-        $token = $request->token;
-        $user = User::where('api_token', '=' , $token)->first();
+        $token = $request->apiToken;
+        $user = User::where('apiToken', '=' , $token)->first();
         return $user;
     }
 

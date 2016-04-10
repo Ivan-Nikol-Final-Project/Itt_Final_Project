@@ -19,15 +19,17 @@ class PaymentController extends Controller
 
  private $data;
 
-    public function postPayment(Request $request, User $user)
+    public function postPayment(Request $request)
     {
         $params = array(
             'cancelUrl' => 'http://localhost:8000/api/v1/cancel_order',
             'returnUrl' => 'http://localhost:8000/api/v1/payment_success',
+            'id' => $request->id,
             'name' => $request->name,
             'description' => 'test',
             'amount' => $request->price,
-            'currency' => $request->currency
+            'currency' => $request->currency,
+            'gold'=> $request->gold
         );
 
         Session::put('params', $params);
@@ -56,7 +58,7 @@ class PaymentController extends Controller
         }
         }
 
-    public function getSuccessPayment(Request $request)
+    public function getSuccessPayment()
     {
         $gateway = Omnipay::create('PayPal_Express');
         $gateway->setUsername('nikol_paraskova-facilitator_api1.abv.bg');
@@ -70,15 +72,17 @@ class PaymentController extends Controller
 
         if(isset($paypalResponse['ACK']) && $paypalResponse['ACK'] === 'Success')
         {
-            $token = $request->token;
-            $user = User::where('api_token', '=', $token)->first();
-            $user['gold'] += $request->gold;
-            print_r($response);
+            $id = Session::get("params['id']");
+            $gold = Session::get("params['gold']");
+            $user = User::where('id', '=', $id)->first();
+            $user['gold'] += $gold;
+            return $user;
+           // print_r($response);
         }else{
             //
         }
 
-        return view('index');
+        return 'PayPalTest';
     }
     }
 
