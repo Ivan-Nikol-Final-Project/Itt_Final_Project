@@ -1,28 +1,106 @@
 <div class="row">
 
-    <div class="col-lg-4 col-lg-offset-4">
+    <div class="col-md-6 col-md-offset-3">
         <form class="form" name="registerForm">
             <fieldset>
                 <legend style="color: white">Register</legend>
-                <div class="text-center error" ng-show="registerForm.$invalid && registerForm.$dirty">Form is not valid!</div>
                 <div class="form-group">
-                    <label for="username" class="control-label">Username</label>
-                    <input type="text" ng-model="user.username" class="form-control" id="username" placeholder="Username" required="required">
+                    <label for="username" class="control-label">
+                        Username
+                    </label>
+                    <input type="text" ng-model="user.username"
+                           name="username" class="form-control"
+                           id="username" placeholder="Username" required="required"
+                           >
+
+                    <p>
+                        <span ng-show="registerForm.username.$touched
+                                    && registerForm.username.$invalid" style="color: red">
+                            Username is required.
+                        </span>
+                        <span ng-show="user.username.length < 5 && registerForm.username.$touched"
+                              style="color: red">
+                            Username should be at least 5 characters.
+                        </span>
+                        <span ng-show="registerForm.username.$untouched
+                                        && registerForm.username.$invalid">
+                            Username is required and should be at least 5 characters.
+                        </span>
+                    </p>
+
                 </div>
                 <div class="form-group">
                     <label for="inputEmail" class="control-label">Email</label>
-                    <input type="text" ng-model="user.email" class="form-control" id="inputEmail" placeholder="Email" required="required">
+                    <input
+                            type="text"
+                            ng-model="user.email"
+                            name="email"
+                            class="form-control"
+                            id="inputEmail"
+                            placeholder="Email"
+                            required="required"
+                            ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z]{2,5}$/">
+                    <p>
+                        <span ng-show="registerForm.email.$touched
+                                        && registerForm.email.$invalid"
+                                        style="color: red">
+                            Please enter a valid email address!
+                        </span>
+                        <span ng-show="registerForm.email.$untouched
+                                        && registerForm.email.$invalid">
+                            Email is required.
+                        </span>
+                    </p>
+
                 </div>
                 <div class="form-group">
                     <label for="inputPassword" class="control-label">Password</label>
-                    <input type="password" ng-model="user.password" class="form-control" id="inputPassword" placeholder="Password" required="required">
+                    <input
+                            type="password"
+                            ng-model="user.password"
+                            name="password"
+                            class="form-control"
+                            id="inputPassword"
+                            placeholder="Password"
+                            required="required"
+                            ng-pattern="/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/">
+                    <p>
+                        <span ng-show="registerForm.password.$touched
+                                    && registerForm.password.$invalid"
+                                    style="color: red">
+                            Password should contain at least one digit, one lower case, one upper case and 6 from the mentioned characters.
+                        </span>
+                        <span ng-show="registerForm.password.$untouched
+                                    && registerForm.password.$invalid">
+                            Password is required and should contain at least one digit, one lower case, one upper case and 6 from the mentioned characters.
+                        </span>
+                    </p>
+
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword" class="control-label">Confirm Password</label>
-                    <input type="password" ng-model="user.confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm Password" required="required">
+                    <input type="password" ng-model="user.confirmPassword" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm Password" required="required">
+                    <p>
+                        <span ng-show="(registerForm.confirmPassword.$touched
+                                        && registerForm.confirmPassword.$invalid)
+                                        || (user.password != user.confirmPassword && registerForm.confirmPassword.$touched)"
+                                        style="color: red">
+                            Your password and confirmation password do not match.
+                        </span>
+                        <span ng-show="registerForm.confirmPassword.$untouched
+                                        && registerForm.confirmPassword.$invalid">
+                            Confirm Password is required.
+                        </span>
+                    </p>
                 </div>
                 <div class="form-group">
                     <button ng-click="vm.register(user, registerForm)" class="btn btn-primary" ng-disabled="registerForm.$invalid || user.password != user.confirmPassword">Register</button>
+                    <span
+                            class="error"
+                            ng-show="registerForm.$invalid
+                                    && registerForm.$dirty">
+                        Form is not valid!
+                    </span>
                 </div>
             </fieldset>
         </form>
