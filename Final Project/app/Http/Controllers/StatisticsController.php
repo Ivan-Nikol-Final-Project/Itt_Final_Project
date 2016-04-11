@@ -7,32 +7,21 @@ use App\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\DB;
 
 class StatisticsController extends Controller{
 
     public function index(Request $request)
     {
+        $users = DB::table('statistics')
+            ->select('users.username', 'statistics.high_score')
+            ->join('users', 'users.id', '=', 'statistics.user_id')
+            ->orderBy('high_score', 'desc')
+            ->paginate(10);
 
-
-        $users = Statistic::orderBy('high_score', 'desc')
-            ->join('users', 'users.id', '=', 'user_id')
-            ->take(10)
-            ->get();
-
-        return $this->transformCollection($users);
+        return $users;
     }
-
-    private function transformCollection($users){
-        return array_map([$this, 'transform'], $users->toArray());
-    }
-
-    private function transform($user){
-        return [
-            'username' => $user['username'],
-            'high_score' => $user['high_score'],
-        ];
-    }
-
+   
 
     public function update(Request $request)
     {

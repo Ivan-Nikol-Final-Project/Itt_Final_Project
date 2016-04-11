@@ -7,7 +7,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\DB;
 
 
 class StatisticsController extends Controller{
@@ -18,10 +18,10 @@ class StatisticsController extends Controller{
 
         $users = Statistic::orderBy('high_score', 'desc')
             ->join('users', 'users.id', '=', 'user_id')
-            ->take(10)
-            ->get();
+            ->paginate(5);
 
-        return $this->transformCollection($users);
+        return $users;
+        //return $this->transformCollection($users);
     }
 
     private function transformCollection($users){
@@ -32,12 +32,26 @@ class StatisticsController extends Controller{
         return [
             'username' => $user['username'],
             'high_score' => $user['high_score'],
+            
         ];
     }
 
 
     public function update(Request $request)
     {
+
+
+       $stat = Statistic::where('user_id', '=', $request->id)->first();
+        if($stat['high_score'] < $request->lastScore)
+        {
+            $stat['high_score'] = $request->lastScore;
+            $stat['last_score'] = $request->lastScore;
+        }
+
+        $stat['last_score'] = $request->lastScore;
+        $stat->save();
+
+
 
 
         $stat = Statistic::where('user_id', '=', $request->id)->first();
@@ -49,9 +63,9 @@ class StatisticsController extends Controller{
 
         $stat['last_score'] = $request->lastScore;
         $stat->save();
-
         $user = User::where('id', '=', $request->id)->first();
         return $user;
+
     }
 
 }

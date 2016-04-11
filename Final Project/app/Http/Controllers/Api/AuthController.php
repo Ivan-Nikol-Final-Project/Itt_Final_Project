@@ -46,9 +46,8 @@ class AuthController extends Controller
 
         $user = User::create($data);
         $statistic['user_id'] = $user['id'];
-        $statistic = Statistic::create($statistic);
-
-        return $user;
+        $statistic = Statistic::create($statistic);        
+        return user;
 
     }
 

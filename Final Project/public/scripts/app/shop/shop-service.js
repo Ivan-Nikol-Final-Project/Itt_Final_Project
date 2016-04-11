@@ -8,10 +8,10 @@
 
             $http.post(baseUrl + '/api/v1/payment', {
                 id: user.id,
-                name: item,
-                price: 1.00,
+                name: 'item',
+                price: '1.00',
                 currency: 'EUR',
-                gold: 100
+                gold: '100'
             }).then(function(response){
                 deferred.resolve(response);
             }, function(err){
