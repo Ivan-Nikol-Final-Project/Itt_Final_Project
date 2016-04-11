@@ -54,12 +54,13 @@
             var whiteRadishBombActive = 0;
             var cobCannonAvailable = 1;
             var maxZombieInHome = 10;
+            var nextSprite = 0;
             var peaMonster;
             var explosions;
             var flower;
             var isGetBonus = false;
 
-            var scoreString = 'Score : ';
+            var scoreString = 'SCORE: ';
             var scoreText;
             var bulletText;
             var redBulletText;
@@ -94,90 +95,78 @@
             var font = { font: '22px Inconsolata', fill: '#fff' };
             var stateFont = { font: '48px Inconsolata', fill: '#fff'};
 
-            var ZombieFactory = function(game, health){
-                this.health = health;
+            var ZombieFactory = function(game){
+
                 this.game = game;
+
+                this.health = 5;
+
+                this.quantity = 1;
+
+                this.nextLaughInterval = 5000;
+
+                this.nextLaugh = 0;
+
+                this.nextZombieInterval = 10000;
+
                 this.zombieVelocity = -30;
-                this.createZombieInterval;
-                this.playLaughInterval;
             };
 
             ZombieFactory.prototype = {
-                init: function () {
 
-                    var quantity = 1;
-                    var interval = 10000;
-                    var _this = this;
+                createZombie: function(game) {
 
-                    _this.createZombie(_this.game, quantity);
+                    if(maxZombieInHome <= 0) {
+                        return;
+                    }
 
-                    _this.playLaughInterval = window.setInterval(function() {
-                        _this.lauphing(_this.game);
-                    }, 5000);
+                    if(this.game.time.now > nextSprite) {
+                        this.quantity += 1;
 
-                    _this.createZombieInterval = window.setInterval(function () {
-
-                        quantity += 1;
-
-                        if(quantity == 10) {
-                            _this.zombieVelocity -= 5;
+                        if(this.quantity == 10) {
+                            this.zombieVelocity -= 5;
                         }
-                        else if(quantity == 20) {
-                            quantity = 5;
-                            interval -= 1000;
-                            _this.health += 1;
-                            _this.zombieVelocity -= 5;
+                        else if(this.quantity == 20) {
+                            this.quantity = 5;
+                            this.nextZombieInterval -= 1000;
+                            this.health += 1;
+                            this.zombieVelocity -= 5;
                         }
 
-                        if(interval <= 1000) {
-                            clearInterval(_this.createZombieInterval);
-                            clearInterval(_this.playLaughInterval);
+                        if(this.nextZombieInterval <= 1000) {
+                            gameState = 'victory';
                             victory();
-                            game.audio.gameOverAudio.play();
                         }
 
-                        if(maxZombieInHome < 0) {
-                            clearInterval(_this.createZombieInterval);
-                            clearInterval(_this.playLaughInterval);
+                        for(var i = 0; i < this.quantity; i++) {
+                            var x = game.rnd.integerInRange(game.world.width, game.world.width + 200);
+                            var y = game.rnd.integerInRange(130, game.world.height - 100);
+
+                            var zombie = game.zombies.create(x, y, 'walkingZombie');
+                            zombie.anchor.setTo(0.5, 0.5);
+
+                            zombie.checkWorldBounds = true;
+                            zombie.events.onOutOfBounds.add(zombieOut, this);
+
+                            zombie.isAlive = true;
+                            zombie.health = this.health;
+                            zombie.body.velocity.setTo(this.zombieVelocity, 0);
+
+                            zombie.animations.add('zombieWalk', [0, 1, 2, 3, 4, 5], 5, true);
+                            zombie.animations.play('zombieWalk');
                         }
 
-                        _this.createZombie(_this.game, quantity);
+                        if(this.quantity % 3 == 0) {
+                            game.audio.zombiesCome.play();
+                        }
 
-                    }, interval);
-                },
-                createZombie: function(game, quantity) {
-
-                    if(maxZombieInHome <= 0) {
-                        return;
+                        nextSprite = game.time.now + this.nextZombieInterval;
                     }
 
-                    for(var i = 0; i < quantity; i++) {
-                        var x = game.rnd.integerInRange(game.world.width, game.world.width + 200);
-                        var y = game.rnd.integerInRange(130, game.world.height - 100);
-
-                        var zombie = game.zombies.create(x, y, 'walkingZombie');
-                        zombie.anchor.setTo(0.5, 0.5);
-
-                        zombie.checkWorldBounds = true;
-                        zombie.events.onOutOfBounds.add(zombieOut, this);
-
-                        zombie.isAlive = true;
-                        zombie.health = this.health;
-                        zombie.body.velocity.setTo(this.zombieVelocity, 0);
-
-                        zombie.animations.add('zombieWalk', [0, 1, 2, 3, 4, 5], 5, true);
-                        zombie.animations.play('zombieWalk');
+                    if(game.time.now > this.nextLaugh) {
+                        game.audio.zombieLaugh.play();
+                        this.nextLaugh = game.time.now + this.nextLaughInterval;
                     }
-
-                    if(quantity % 3 == 0) {
-                        game.audio.zombiesCome.play();
-                    }
-                },
-                lauphing: function(game) {
-                    if(maxZombieInHome <= 0) {
-                        return;
-                    }
-                    game.audio.zombieLaugh.play();
                 }
             };
 
@@ -221,7 +210,7 @@
                 }
             }
 
-            var game = new Phaser.Game(980, 550, Phaser.AUTO, 'game-container', {
+            var game = new Phaser.Game(930, 550, Phaser.AUTO, 'game-container', {
                 preload: preload,
                 create: create,
                 update: update
@@ -267,21 +256,21 @@
 
             function create() {
 
-                game.add.tileSprite(0, 0, 1000, 800, 'grass');
+                game.add.tileSprite(0, 0, 930, 550, 'grass');
 
                 /*userText = game.add.text(game.world.width - user.length * 15,
                     game.world.height - 30, user, font);*/
-                goldText = game.add.text(40, 10, gold, font);
-                scoreText = game.add.text(game.world.centerX, 25, scoreString + score, font);
-                scoreText.anchor.setTo(0.5, 0.5);
-                bulletText = game.add.text(game.world.width - 80, 10, numberOfBullets, font);
-                redBulletText = game.add.text(game.world.width - 80, 40, numberOfRedBullets, font);
-                monsterPeaBulletsText = game.add.text(game.world.width - 80, 70, numberOfMonsterPeaBullets, font);
+                goldText = game.add.text(45, 15, gold, font);
+                scoreText = game.add.text(game.world.centerX, 15, scoreString + score, font);
+                scoreText.anchor.setTo(0.5, 0);
+                bulletText = game.add.text(game.world.width - 80, 15, numberOfBullets, font);
+                redBulletText = game.add.text(game.world.width - 80, 45, numberOfRedBullets, font);
+                monsterPeaBulletsText = game.add.text(game.world.width - 80, 75, numberOfMonsterPeaBullets, font);
                 maxZombieInHomeText = game.add.text(40, game.world.height - 40, maxZombieInHome, font);
-                availablePeaText = game.add.text(40, 40, peaAvailable, font);
-                peaMonsterAvailableText = game.add.text(90, 40, peaMonsterAvailable, font);
-                cobCannonAvailableText = game.add.text(210, 40, cobCannonAvailable, font);
-                whiteRadishBombText = game.add.text(140, 40, whiteRadishBombAvailable, font);
+                availablePeaText = game.add.text(40, 55, peaAvailable, font);
+                peaMonsterAvailableText = game.add.text(95, 55, peaMonsterAvailable, font);
+                cobCannonAvailableText = game.add.text(215, 55, cobCannonAvailable, font);
+                whiteRadishBombText = game.add.text(145, 55, whiteRadishBombAvailable, font);
                 stateText = game.add.text(game.world.centerX, game.world.centerY, ' ', stateFont);
                 stateText.anchor.setTo(0.5, 0.5);
                 stateText.visible = false;
@@ -308,19 +297,18 @@
                 game.audio.hitZombie = game.add.audio('hitZombie');
                 game.audio.explosion = game.add.audio('explosionAudio');
 
-                buyBulletsButton = game.add.button(game.world.width - 120, 10, 'bullet', buyBullets, this);
-                buyRedBulletsButton = game.add.button(game.world.width - 115, 40, 'redBullet', buyRedBullets, this);
-                buyMonsterBulletsButton = game.add.button(game.world.width - 110, 70, 'monsterPeaBullet', buyMonsterBullets, this);
-                peaModeBtn = game.add.button(10, 40, 'peaIcon', addPeaMode, this);
-                peaMonsterModeBTtn = game.add.button(70, 40, 'peaMonsterIcon', addMonsterPeaMode, this);
-                whiteRadishModeBtn = game.add.button(120, 40, 'whiteRadishIcon', addWhiteRadishMode, this);
-                cobCannonModeBtn = game.add.button(170, 40, 'cobCannonIcon', addCobCannonMode, this);
+                buyBulletsButton = game.add.button(game.world.width - 120, 15, 'bullet', buyBullets, this);
+                buyRedBulletsButton = game.add.button(game.world.width - 115, 45, 'redBullet', buyRedBullets, this);
+                buyMonsterBulletsButton = game.add.button(game.world.width - 110, 75, 'monsterPeaBullet', buyMonsterBullets, this);
+                peaModeBtn = game.add.button(10, 50, 'peaIcon', addPeaMode, this);
+                peaMonsterModeBTtn = game.add.button(70, 50, 'peaMonsterIcon', addMonsterPeaMode, this);
+                whiteRadishModeBtn = game.add.button(120, 50, 'whiteRadishIcon', addWhiteRadishMode, this);
+                cobCannonModeBtn = game.add.button(170, 50, 'cobCannonIcon', addCobCannonMode, this);
 
                 goldImage = game.add.image(10, 10, 'gold');
                 zombieInHomeImage = game.add.image(10, game.world.height - 40, 'zombieInHome');
 
-                zombieFactory = new ZombieFactory(game, 5);
-                zombieFactory.init();
+                zombieFactory = new ZombieFactory(game);
 
                 bulletsFactory = new BulletsFactory(game);
                 bulletsFactory.init();
@@ -336,20 +324,26 @@
 
             function update() {
 
+                if(gameState == 'gameOver' || gameState == 'victory') {
+                    clearField();
+                }
+
+                zombieFactory.createZombie(game);
+
                 fireFlower();
 
                 if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
                     fireMonsterPea();
                 }
 
-                game.physics.arcade.overlap(game.flowers, game.zombies, flowerKillZombie, null, this);
-                game.physics.arcade.overlap(game.plants, game.zombies, peaDie, null, this);
-                game.physics.arcade.overlap(game.monsterPlants, game.zombies, monsterPeaDie, null, this);
+                game.physics.arcade.overlap(game.flowers, game.zombies, zombieOverlapFlower, null, this);
+                game.physics.arcade.overlap(game.plants, game.zombies, zombieOverlapPea, null, this);
+                game.physics.arcade.overlap(game.monsterPlants, game.zombies, zombieOverlapMonster, null, this);
                 game.physics.arcade.overlap(game.whiteRadishBombs, game.zombies, explosion, null, this);
                 game.physics.arcade.overlap(game.bullets, game.zombies, hitZombie, null, this);
                 game.physics.arcade.overlap(game.redBullets, game.zombies, hitZombie, null, this);
                 game.physics.arcade.overlap(game.monsterBullets, game.zombies, hitZombie, null, this);
-                game.physics.arcade.overlap(game.cobCannons, game.zombies, cobCannonKillsZombie, null, this);
+                game.physics.arcade.overlap(game.cobCannons, game.zombies, cobCannonOverlapZombie, null, this);
 
                 updateInfo();
 
@@ -466,6 +460,7 @@
                 if (x <= game.world.width - 200 && x >= 100 && y > 100 && y <= game.world.height - 75) {
                     var pea = game.plants.create(x, y, 'pea');
                     pea.anchor.setTo(0.5, 0.5);
+                    pea.shootCounter = 0;
                     peaAvailable -= 1;
                     gold -= 50;
 
@@ -614,10 +609,10 @@
 
             //collisions
 
-            function monsterPeaDie(plant, zombie) {
+            function zombieOverlapMonster(monsterPea, zombie) {
 
                 if(zombie.isAlive) {
-                    game.monsterPlants.remove(plant);
+                    game.monsterPlants.remove(monsterPea);
                     zombie.isAlive = false;
                     zombie.body.velocity.setTo(150, -150);
                     game.add.tween(zombie).to( { angle: 3600 }, 10000, Phaser.Easing.Linear.None, true);
@@ -626,7 +621,7 @@
                 }
             }
 
-            function peaDie(plant, zombie) {
+            function zombieOverlapPea(plant, zombie) {
 
                 if(zombie.isAlive) {
                     plant.kill();
@@ -639,7 +634,7 @@
                 }
             }
 
-            function flowerKillZombie(flower, zombie) {
+            function zombieOverlapFlower(flower, zombie) {
 
                 if(zombie.isAlive) {
                     game.audio.zombieDie.play();
@@ -679,7 +674,7 @@
                 game.audio.hitZombie.play();
             }
 
-            function  cobCannonKillsZombie(cobCannon, zombie) {
+            function  cobCannonOverlapZombie(cobCannon, zombie) {
 
                 if(!zombie.isAlive || zombie.position.x >= game.world.width) {
                     return;
@@ -765,29 +760,32 @@
                 game.cobCannons.remove(cobCannon);
             }
 
-            function flyTexts(points, x, y) {
+            function flyTexts(text, x, y) {
                 x =  x || game.rnd.integerInRange(200, game.world.width - 200);
                 y = y || game.rnd.integerInRange(200, game.world.height - 200);
-                var textAdded = game.add.text(x, y, '+' + points,
+                var textAdded = game.add.text(x, y, '+' + text,
                     { font: "28px Inconsolata", fill: "#000", stroke: "#FFF", strokeThickness: 10 });
                 textAdded.anchor.set(0.5, 0.5);
                 game.add.tween(textAdded).to({ alpha: 0, y: y-50 }, 1000, Phaser.Easing.Linear.None, true);
             }
 
-            function gameOver() {
-
+            function clearField() {
                 game.zombies.forEach(function(zombie){
                     game.zombies.remove(zombie);
-                });
+                }, this);
                 game.whiteRadishBombs.forEach(function(whiteRadish) {
                     game.whiteRadishBombs.remove(whiteRadish);
-                });
+                }, this);
                 game.plants.forEach(function (plant) {
                     game.plants.remove(plant)
-                });
+                }, this);
                 game.monsterPlants.forEach(function (monster) {
                     game.monsterPlants.remove(monster);
-                });
+                }, this);
+            }
+
+            function gameOver() {
+
                 stateText.text = 'GAME OVER';
                 stateText.visible = true;
                 game.audio.gamePlay.stop();
@@ -800,22 +798,15 @@
             }
 
             function victory() {
-                game.zombies.forEach(function(zombie){
-                    game.zombies.remove(zombie);
-                });
-                game.whiteRadishBombs.forEach(function(whiteRadish) {
-                    game.whiteRadishBombs.remove(whiteRadish);
-                });
-                game.plants.forEach(function (plant) {
-                    game.plants.remove(plant)
-                });
-                game.monsterPlants.forEach(function (monster) {
-                    game.monsterPlants.remove(monster);
-                });
+
                 stateText.text = 'YOU WIN';
                 stateText.visible = true;
                 game.audio.gamePlay.stop();
                 mode = 'disable';
+                sendResult({
+                    id: user.id,
+                    lastScore: score
+                });
             }
 
             function getBonus() {
