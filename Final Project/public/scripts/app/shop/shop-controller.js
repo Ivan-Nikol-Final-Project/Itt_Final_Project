@@ -12,7 +12,7 @@
                     shop.buy(item, user)
                         .then(function(response){
                             vm.id = response.id;
-                            sendRequestPayPall(response);
+                            shop.sendRequestPayPall(response);
 
                             console.log(response);
                         }, function(err){

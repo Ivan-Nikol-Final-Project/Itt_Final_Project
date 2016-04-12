@@ -14,10 +14,13 @@
             }, function(err){
                 deferred.reject(err);
             })
+
+            return deferred.promise;
         }
 
         function sendRequestPayPall(response) {
-            var formId = 'form' + response.id;
+            console.log(response);
+            var formId = 'form' + response.order_value;
             document.getElementById(formId).submit();
         }
 
