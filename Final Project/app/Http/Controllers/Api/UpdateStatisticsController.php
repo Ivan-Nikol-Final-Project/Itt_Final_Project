@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 
 
-class StatisticsController extends Controller{
+class UpdateStatisticsController extends Controller{
 
     public function index(Request $request)
     {
