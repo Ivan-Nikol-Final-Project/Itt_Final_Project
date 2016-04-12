@@ -1,20 +1,41 @@
-<div class="container" style="width:30%">
-    <table class="table">
-        <thead>
-            <tr>
-                <td>user</td>
-                <td class="text-right">score</td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="user in vm.rating">
-                <td>{{user.username}}</td>
-                <td class="text-right">{{user['high_score']}}</td>
-            </tr>
-        </tbody>
-    </table>
-    <hr>
-   <!-- <p class="text-center">
-        <h4 style="color: #00b3ee">Your score: {{vm.user.score}}</h4>
-    </p>-->
+<div class="row">
+    <div class="col-md-6 col-md-offset-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>user</td>
+                    <td class="text-right">score</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in vm.rating">
+                    <td>{{user.username}}</td>
+                    <td class="text-right">{{user['high_score']}}</td>
+                </tr>
+                <tr style="color: #00b3ee">
+                    <td>
+                        Your high score:
+                    </td>
+                    <td class="text-right">
+                        {{vm.user.highScore}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="paging" class="text-center">
+            <span ng-click="vm.getRating(1)" class="fa fa-angle-double-left fa-2x white" aria-hidden="true"></span>
+            &nbsp;
+            <span ng-click="vm.getRating(vm.previousPage)" class="fa fa-angle-left fa-2x white" aria-hidden="true"></span>
+
+            &nbsp;
+            <span style="position: relative; bottom: 8px">{{vm.currentPage}} / {{vm.lastPage}}</span>
+            &nbsp;
+            <span ng-click="vm.getRating(vm.nextPage)" class="fa fa-angle-right fa-2x white" aria-hidden="true"></span>
+            &nbsp;
+            <span ng-click="vm.getRating(vm.lastPage)" class="fa fa-angle-double-right fa-2x white" aria-hidden="true"></span>
+
+        </div>
+    </div>
+
 </div>

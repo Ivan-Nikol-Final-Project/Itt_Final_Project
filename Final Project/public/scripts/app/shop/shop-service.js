@@ -8,19 +8,22 @@
 
             $http.post(baseUrl + '/api/v1/payment', {
                 id: user.id,
-                name: item,
-                price: 1.00,
-                currency: 'EUR',
-                gold: 100
+                gold: item
             }).then(function(response){
-                deferred.resolve(response);
+                deferred.resolve(response.data);
             }, function(err){
                 deferred.reject(err);
             })
         }
 
+        function sendRequestPayPall(response) {
+            var formId = 'form' + response.id;
+            document.getElementById(formId).submit();
+        }
+
         return {
-            buy: buy
+            buy: buy,
+            sendRequestPayPall: sendRequestPayPall
         }
     };
 

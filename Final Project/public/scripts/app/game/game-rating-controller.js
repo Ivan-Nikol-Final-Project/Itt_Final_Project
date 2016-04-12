@@ -1,21 +1,41 @@
 (function() {
     "use strict";
 
-    function GameRatingController(game) {
+    function GameRatingController(game, baseUrl, identity) {
         var vm = this;
+        vm.url = baseUrl + '/api/v1/scores?page=';
 
-        vm.getRating = (function () {
+        vm.navigateToPage = function (url) {
 
-            game.getRating()
+            game.getRating(url)
                 .then(function(response){
-                    vm.rating = response.data;
+                    vm.rating = response.data.data;
+                    vm.currentPage = response.data.current_page;
+                    vm.lastPage = response.data.last_page;
+                    vm.nextPage = vm.currentPage + 1 > vm.lastPage ? vm.lastPage : vm.currentPage + 1;
+                    vm.previousPage = vm.currentPage - 1 <= 0 ? 1 : vm.currentPage - 1;
                 }, function(err) {
-                    //TODO
                 });
-        })();
+        };
+
+        vm.getRating = function (number) {
+
+            var url = vm.url + number;
+            vm.navigateToPage(url);
+        };
+
+        identity.getUser()
+            .then(function (response) {
+
+                vm.user = {
+                    highScore: 0
+                }
+            });
+
+        vm.getRating(1);
     }
 
     angular.module('gameApp.controllers')
-        .controller('GameRatingController', ['game', GameRatingController]);
+        .controller('GameRatingController', ['game', 'baseUrl', 'identity', GameRatingController]);
 
 })();

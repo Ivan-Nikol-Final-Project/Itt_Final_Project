@@ -3,10 +3,10 @@
 
     function GameService($http, $q, baseUrl, identity) {
 
-        function getRating() {
+        function getRating(url) {
             var deferred = $q.defer();
 
-            $http.get(baseUrl + '/api/v1/scores')
+            $http.get(url)
                 .then(function (response){
                     deferred.resolve(response);
                 }, function(err){

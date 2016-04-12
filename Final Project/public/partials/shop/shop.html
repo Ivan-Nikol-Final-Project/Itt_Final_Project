@@ -3,49 +3,81 @@
     <hr>
     <div class="row" id="shop">
         <div class="col-lg-4">
-            <form action="">
-                <img src="assets/images/golden-1.jpg" width="100%" height="200px">
-                <p class="text-center">
-                <h3>Gold: 1000</h3>
-                </p>
-                <p class="text-center">
-                <h5>Price: 1.00lv.</h5>
-                </p>
-                <p>
-                    <!--<button class="btn btn-success" ng-click="vm.buyGold('gold 1000')">Buy Gold</button>-->
-                    <button class="btn btn-success" type="submit">Buy Gold</button>
-                </p>
-            </form>
+
+            <img src="assets/images/golden-1.jpg" width="100%" height="200px">
+            <p class="text-center">
+            <h3>Gold: 1000</h3>
+            </p>
+            <p class="text-center">
+            <h5>Price: 1.00lv.</h5>
+            </p>
+            <p>
+                <button class="btn btn-success" ng-click="vm.buyGold(1000)">Buy Gold</button>
+
+                <form id="form1000" class="hidden" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="UUP2JU6NYJXX8">
+                    <input type="hidden" name="return" value="http://localhost:8000/thank-you.php?id={{vm.id}}">
+                    <input type="hidden" name="notify_url" value="http://localhost:8000/thank-you.php">
+                    <input type="image"
+                           src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif"
+                           border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                </form>
+
+            </p>
+
         </div>
         <div class="col-lg-4">
-            <form action="">
-                <img src="assets/images/golden-2.jpg" width="100%" height="200px">
-                <p class="text-center">
-                <h3>Gold: 3000</h3>
-                </p>
-                <p class="text-center">
-                <h5>Price: 3.00lv.</h5>
-                </p>
-                <p>
-                    <!--<button class="btn btn-success" ng-click="vm.buyGold('gold 3000')">Buy Gold</button>-->
-                    <button class="btn btn-success" type="submit">Buy Gold</button>
-                </p>
-            </form>
+
+            <img src="assets/images/golden-2.jpg" width="100%" height="200px">
+            <p class="text-center">
+            <h3>Gold: 3000</h3>
+            </p>
+            <p class="text-center">
+            <h5>Price: 3.00lv.</h5>
+            </p>
+            <p>
+                <button class="btn btn-success" ng-click="vm.buyGold(3000)">Buy Gold</button>
+
+                <form id="form3000" class="hidden" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="GU3GGWP6KM8LG">
+                    <input type="hidden" name="return" value="http://localhost:8000/thank-you.php?id={{vm.id}}">
+                    <input type="hidden" name="notify_url" value="http://localhost:8000/thank-you.php">
+                    <input type="image"
+                           src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif"
+                           border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                </form>
+
+            </p>
+
         </div>
         <div class="col-lg-4">
-            <form action="">
-                <img src="assets/images/golden-3.jpg" width="100%" height="200px">
-                <p class="text-center">
-                <h3>Gold: 10000</h3>
-                </p>
-                <p class="text-center">
-                <h5>Price: 10.00lv.</h5>
-                </p>
-                <p>
-                    <!--<button class="btn btn-success" ng-click="vm.buyGold('gold 10000')">Buy Gold</button>-->
-                    <button class="btn btn-success" type="submit">Buy Gold</button>
-                </p>
-            </form>
+
+            <img src="assets/images/golden-3.jpg" width="100%" height="200px">
+            <p class="text-center">
+            <h3>Gold: 10000</h3>
+            </p>
+            <p class="text-center">
+            <h5>Price: 10.00lv.</h5>
+            </p>
+            <p>
+                <button class="btn btn-success" ng-click="vm.buyGold(10000)">Buy Gold</button>
+
+                <form id="form10000" class="hidden" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="KVMATRBYJ75HW">
+                    <input type="hidden" name="hosted_button_id" value="GU3GGWP6KM8LG">
+                    <input type="hidden" name="return" value="http://localhost:8000/thank-you.php?id={{vm.id}}">
+                    <input type="hidden" name="notify_url" value="http://localhost:8000/thank-you.php">
+                    <input type="image"
+                           src="https://www.sandbox.paypal.com/en_US/i/btn/btn_buynowCC_LG.gif"
+                           border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                </form>
+            </p>
         </div>
     </div>
 </div>

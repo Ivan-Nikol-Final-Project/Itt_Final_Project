@@ -5,8 +5,9 @@ body {
     background-image: url('../assets/images/zombies-02.jpg');
     background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed;
     background-size: cover;
-    min-height: 650px;
+    min-height: 550px;
     height: auto;
     color: #fff;
     z-index: -10;
@@ -42,5 +43,22 @@ body {
 .error {
     color: red;
 }
+.glyph-2x{font-size: 2em;}
+.glyph-3x{font-size: 3em;}
+.glyph-4x{font-size: 4em;}
+.glyph-5x{font-size: 5em;}
+.white, .white>a {
+    color: white;
+}
+.glyphicon-large {
+    min-height: 260px;
+    line-height: 260px;
+    font-size: 5em;
+    width: 1em;
+    display: block;
+    margin: 50% auto 0px;
+}
 
-
+a:hover {
+    text-decoration: none;
+}
