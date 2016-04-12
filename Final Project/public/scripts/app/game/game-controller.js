@@ -12,7 +12,6 @@
                     currentUser = user;
                 });
         };
-
     }
 
     angular.module('gameApp.controllers')

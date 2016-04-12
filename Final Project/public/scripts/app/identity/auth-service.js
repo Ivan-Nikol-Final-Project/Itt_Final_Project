@@ -1,8 +1,9 @@
 (function () {
     'use strict';
 
-    var authService = function authService($http, $q, $cookies, identity, baseUrl) {
+    var authService = function authService($http, $q, $cookies, identity, baseUrl, $location) {
         var TOKEN_KEY = 'authentication'; //cookie key
+        var deferred = $q.defer();
 
         var register = function(user) {
             var defered = $q.defer();
@@ -52,11 +53,12 @@
                 $cookies.remove(TOKEN_KEY);
                 $http.defaults.headers.common.Authorization = null;
                 identity.removeUser();
+                deferred = $q.defer();
             },
         };
     };
 
     angular
         .module('gameApp.services')
-        .factory('auth', ['$http', '$q', '$cookies', 'identity', 'baseUrl', authService]);
+        .factory('auth', ['$http', '$q', '$cookies', 'identity', 'baseUrl', '$location', authService]);
 }());

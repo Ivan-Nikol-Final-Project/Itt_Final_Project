@@ -1,3 +1,21 @@
-<div>
-    {{vm.hi}}
+<div id="welcomeText" class="container text-center">
+    <div class="title">
+        <h1 style="font: 48px Inconsolata;">
+            WELCOME TO ZOMBIE PARK
+        </h1>
+        <h3>
+            Play a new Tower Defense Game
+        </h3>
+        <a id="playBtn" href="#/game/start" class="btn btn-transparent" ng-show="$parent.vm.currentUser">
+            <h1>
+                PLAY
+            </h1>
+        </a>
+        <a id="playBtn-login" href="#/identity/login" class="btn btn-transparent" ng-show="!$parent.vm.currentUser">
+            <h1>
+                PLAY
+            </h1>
+        </a>
+    </div>
+
 </div>

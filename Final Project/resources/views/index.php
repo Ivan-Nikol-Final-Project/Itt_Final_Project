@@ -24,27 +24,26 @@
     <nav class="navbar navbar-transparent">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                <button type="button" class="navbar-toggle"
+                        data-toggle="collapse" data-target="#myNavbar"
+                        style="color: white">
+                    <i class="fa fa-bars" aria-hidden="true"></i>
                 </button>
-                <a class="navbar-brand" href="#/">WebSiteName</a>
+                <a class="navbar-brand" href="#/">Zombie Park</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
                 <ul class="nav navbar-nav">
-                    <li><a href="#/game/start">Game</a></li>
+                    <li ng-show="vm.currentUser"><a href="#/game/start">Game</a></li>
                     <li><a href="#/game/rating">Rating</a></li>
                     <li><a href="#/shop">Shop</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right" ng-show="!vm.currentUser">
                     <li><a href="#/identity/register"><span class="glyphicon glyphicon-user"></span> Register</a></li>
                     <li><a href="#/identity/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-                    <!--<li><a href="#/identity/login" ng-show="vm.currentUser"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>-->
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right" ng-show="vm.currentUser">
-                    <li><a href="#/identity/profile">{{vm.currentUser.username}}</a></li>
+                    <li><a href="">{{vm.currentUser.username}}</a></li>
                     <li><a href="#" ng-click="vm.logout()"> Logout</a></li>
                 </ul>
             </div>
@@ -55,14 +54,6 @@
 
     </div>
 </div>
-
-
-    <!--<script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="node_modules/angular/angular.min.js"></script>
-    <script src="node_modules/angular-route/angular-route.min.js"></script>
-    <script src="node_modules/angular-cookies/angular-cookies.min.js"></script>-->
-    <!--<script src="node_modules/phaser/dist/phaser.min.js"></script>-->
 
     <script src="scripts/app/app.js"></script>
 

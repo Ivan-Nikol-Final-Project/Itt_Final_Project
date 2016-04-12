@@ -1,18 +1,20 @@
-<div class="container" style="width:60%">
-    <h1>Shop</h1>
-    <hr>
-    <div class="row" id="shop">
-        <div class="col-lg-4">
+<div class="container" style="width:70%">
+    <div id="shop">
+        <h1>Shop</h1>
+        <hr>
+        <div class="row">
+            <div class="col-sm-4">
 
-            <img src="assets/images/golden-1.jpg" width="100%" height="200px">
-            <p class="text-center">
-            <h3>Gold: 1000</h3>
-            </p>
-            <p class="text-center">
-            <h5>Price: 1.00lv.</h5>
-            </p>
-            <p>
-                <button class="btn btn-success" ng-click="vm.buyGold(1000)">Buy Gold</button>
+                <img src="assets/images/golden-1.jpg" width="100%">
+                <p class="text-center">
+                <h3 class="shop-quantity">Gold: 1000</h3>
+                <h4>Price: 1.00lv.</h4>
+                </p>
+                <!--<p class="text-center">
+                <h4>Price: 1.00lv.</h4>
+                </p>-->
+                <p>
+                    <button class="btn btn-success" ng-click="vm.buyGold(1000)" style="margin-bottom: 1em">Buy Gold</button>
 
                 <form id="form1000" class="hidden" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
                     <input type="hidden" name="cmd" value="_s-xclick">
@@ -25,20 +27,21 @@
                     <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
                 </form>
 
-            </p>
+                </p>
 
-        </div>
-        <div class="col-lg-4">
+            </div>
+            <div class="col-sm-4">
 
-            <img src="assets/images/golden-2.jpg" width="100%" height="200px">
-            <p class="text-center">
-            <h3>Gold: 3000</h3>
-            </p>
-            <p class="text-center">
-            <h5>Price: 3.00lv.</h5>
-            </p>
-            <p>
-                <button class="btn btn-success" ng-click="vm.buyGold(3000)">Buy Gold</button>
+                <img src="assets/images/golden-2.jpg" width="100%" height="auto">
+                <p class="text-center">
+                <h3 class="shop-quantity">Gold: 3000</h3>
+                <h4>Price: 3.00lv.</h4>
+                </p>
+                <!--<p class="text-center">
+                <h4>Price: 3.00lv.</h4>
+                </p>-->
+                <p>
+                    <button class="btn btn-success" ng-click="vm.buyGold(3000)" style="margin-bottom: 1em">Buy Gold</button>
 
                 <form id="form3000" class="hidden" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
                     <input type="hidden" name="cmd" value="_s-xclick">
@@ -51,20 +54,21 @@
                     <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
                 </form>
 
-            </p>
+                </p>
 
-        </div>
-        <div class="col-lg-4">
+            </div>
+            <div class="col-sm-4">
 
-            <img src="assets/images/golden-3.jpg" width="100%" height="200px">
-            <p class="text-center">
-            <h3>Gold: 10000</h3>
-            </p>
-            <p class="text-center">
-            <h5>Price: 10.00lv.</h5>
-            </p>
-            <p>
-                <button class="btn btn-success" ng-click="vm.buyGold(10000)">Buy Gold</button>
+                <img src="assets/images/golden-3.jpg" width="100%" height="auto">
+                <p class="text-center">
+                <h3 class="shop-quantity">Gold: 10000</h3>
+                <h4>Price: 10.00lv.</h4>
+                </p>
+                <!-- <p class="text-center">
+                 <h4>Price: 10.00lv.</h4>
+                 </p>-->
+                <p>
+                    <button class="btn btn-success" ng-click="vm.buyGold(10000)" style="margin-bottom: 1em">Buy Gold</button>
 
                 <form id="form10000" class="hidden" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
                     <input type="hidden" name="cmd" value="_s-xclick">
@@ -77,7 +81,8 @@
                            border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
                     <img alt="" border="0" src="https://www.sandbox.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
                 </form>
-            </p>
+                </p>
+            </div>
         </div>
     </div>
 </div>

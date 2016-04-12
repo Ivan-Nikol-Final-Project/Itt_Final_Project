@@ -4,7 +4,7 @@
     function HomeController() {
         var vm = this;
 
-        vm.hi = 'Hi';
+
     }
 
     angular.module('gameApp.controllers')
