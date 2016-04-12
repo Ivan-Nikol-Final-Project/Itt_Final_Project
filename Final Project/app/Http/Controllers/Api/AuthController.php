@@ -42,12 +42,12 @@ class AuthController extends Controller
         $data['password'] = bcrypt($data['password']);
         $data['gold'] = 1000;
         $data['api_token'] = md5(microtime(true));
-        $data['is_admin'] = false;
+       
 
         $user = User::create($data);
         $statistic['user_id'] = $user['id'];
         $statistic = Statistic::create($statistic);        
-        return user;
+        return $user;
 
     }
 

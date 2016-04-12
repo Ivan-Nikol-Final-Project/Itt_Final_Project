@@ -24,16 +24,13 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function isAdmin()
-    {
-        return $this->is_admin;
-    }
-    public function items()
-    {
-        return $this->belongsToMany(\App\Item::class, 'users_items');
-    }
     public function statistic()
     {
-        return $this->hasMany(\App\Statistic::class, 'user_id');
+        return $this->hasOne(\App\Statistic::class, 'user_id');
+    }
+
+    public function payment()
+    {
+        return $this->hasMany(\App\Payment::class, 'user_id');
     }
 }

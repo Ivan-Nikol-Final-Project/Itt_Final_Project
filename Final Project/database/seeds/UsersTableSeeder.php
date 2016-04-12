@@ -18,7 +18,6 @@ class UsersTableSeeder extends Seeder
                 'email' => $faker->email,
                 'password' => bcrypt('secret'),
                 'username' => $faker->userName,
-                'is_admin' => 0,
                 'gold' => 1000,
                 'api_token' => md5(microtime(true)),
             ]);

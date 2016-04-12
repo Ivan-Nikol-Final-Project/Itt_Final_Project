@@ -12,7 +12,7 @@ class StatisticsTableSeeder extends Seeder
     public function run()
     {
         $faker = Faker\Factory::create();
-        for ($i = 1; $i < 20; $i += 1) {
+        for ($i = 5; $i < 20; $i += 1) {
             \App\Statistic::create([
                 'user_id' => $i + 1,
                 'high_score' => $faker->numberBetween($min = 1, $max = 10000),
