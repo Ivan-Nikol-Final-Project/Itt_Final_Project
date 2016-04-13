@@ -69,5 +69,6 @@
     <script src="scripts/app/game/game-controller.js"></script>
     <script src="scripts/app/game/game-rating-controller.js"></script>
     <script src="scripts/app/shop/shop-controller.js"></script>
+    <script src="scripts/app/pay-pall/pay-pall-controller.js"></script>
 </body>
 </html>

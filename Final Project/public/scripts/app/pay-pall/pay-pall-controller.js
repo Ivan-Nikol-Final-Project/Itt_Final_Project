@@ -1,10 +1,11 @@
 (function(){
+    'use strict';
 
-    function PayPallController(paypall, identity) {
+    function PayPallController(identity) {
         identity.getUser();
     }
 
     angular.module('gameApp.controllers')
-        .controller('PayPallController', ['payPall', 'identity', ShopController]);
+        .controller('PayPallController', ['identity', PayPallController]);
 
 })();
