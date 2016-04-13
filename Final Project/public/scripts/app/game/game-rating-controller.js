@@ -26,7 +26,7 @@
 
         identity.getUser()
             .then(function (response) {
-
+                console.log(response);
                 vm.user = {
                     highScore: response.statistic.high_score
                 }

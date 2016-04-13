@@ -44,7 +44,7 @@
 
                 <ul class="nav navbar-nav navbar-right" ng-show="vm.currentUser">
                     <li><a href="">{{vm.currentUser.username}}</a></li>
-                    <li><a href="#" ng-click="vm.logout()"> Logout</a></li>
+                    <li><a href="#" ng-click="vm.logout()"> Logout <span class="glyphicon glyphicon-log-out"></span></a></li>
                 </ul>
             </div>
         </div>

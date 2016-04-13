@@ -40,8 +40,6 @@
 
             user = user || 'guest';
 
-            console.log(user);
-
             var gold = user.gold || 500;
             var score = 0;
             var bulletSpeed = 500;
@@ -809,6 +807,9 @@
                 sendResult({
                     id: user.id,
                     lastScore: score
+                }).then(function(response){
+                    identity.removeUser();
+                    identity.setUser(response);
                 });
             }
 

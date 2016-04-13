@@ -1,5 +1,5 @@
 * {
-    /*overflow: hidden;*/
+    overflow: hidden;
     margin: 0;
 }
 body {
@@ -27,7 +27,7 @@ body {
 #startBtn {
     /*width: 200px;*/
     margin-top: 30%;
-    padding: 20px 120px;
+    padding: 0px 80px;
     background-color: rgba(92,184,92,0.8);
 }
 #wrapper {

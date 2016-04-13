@@ -3,16 +3,19 @@
         <table class="table">
             <thead>
                 <tr>
+                    <td></td>
                     <td>user</td>
                     <td class="text-right">score</td>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="user in vm.rating">
+                    <td>{{1 + $index + (vm.currentPage - 1) * 10}}</td>
                     <td>{{user.username}}</td>
                     <td class="text-right">{{user['high_score']}}</td>
                 </tr>
                 <tr style="color: #00b3ee">
+                    <td></td>
                     <td>
                         Your high score:
                     </td>
@@ -29,7 +32,7 @@
             <span ng-click="vm.getRating(vm.previousPage)" class="fa fa-angle-left fa-2x white" aria-hidden="true"></span>
 
             &nbsp;
-            <span style="position: relative; bottom: 5px">{{vm.currentPage}} / {{vm.lastPage}}</span>
+            <span style="position: relative; bottom: 8px">{{vm.currentPage}} / {{vm.lastPage}}</span>
             &nbsp;
             <span ng-click="vm.getRating(vm.nextPage)" class="fa fa-angle-right fa-2x white" aria-hidden="true"></span>
             &nbsp;
