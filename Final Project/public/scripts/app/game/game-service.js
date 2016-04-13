@@ -780,6 +780,18 @@
                 game.monsterPlants.forEach(function (monster) {
                     game.monsterPlants.remove(monster);
                 }, this);
+                game.bullets.forEach(function(bullet) {
+                    game.bullets.remove(bullet);
+                }),
+                game.redBullets.forEach(function(bul) {
+                    game.redBullets.remove(bul);
+                }),
+                game.monsterBullets.forEach(function(bul) {
+                    game.monsterBullets.remove(bul);
+                }),
+                game.explosions.forEach(function(explosion) {
+                    game.explosions.remove(explosion);
+                })
             }
 
             function gameOver() {

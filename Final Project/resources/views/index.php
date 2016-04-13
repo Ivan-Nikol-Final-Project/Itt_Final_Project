@@ -32,8 +32,8 @@
                 <a class="navbar-brand" href="#/">Zombie Park</a>
             </div>
             <div class="collapse navbar-collapse" id="myNavbar">
-                <ul class="nav navbar-nav">
-                    <li ng-show="vm.currentUser"><a href="#/game/start">Game</a></li>
+                <ul class="nav navbar-nav" ng-show="vm.currentUser">
+                    <li><a href="#/game/start">Game</a></li>
                     <li><a href="#/game/rating">Rating</a></li>
                     <li><a href="#/shop">Shop</a></li>
                 </ul>
