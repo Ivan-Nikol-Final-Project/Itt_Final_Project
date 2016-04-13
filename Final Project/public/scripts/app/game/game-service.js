@@ -256,8 +256,6 @@
 
                 game.add.tileSprite(0, 0, 930, 550, 'grass');
 
-                /*userText = game.add.text(game.world.width - user.length * 15,
-                    game.world.height - 30, user, font);*/
                 goldText = game.add.text(45, 15, gold, font);
                 scoreText = game.add.text(game.world.centerX, 15, scoreString + score, font);
                 scoreText.anchor.setTo(0.5, 0);

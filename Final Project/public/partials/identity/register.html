@@ -18,7 +18,7 @@
                            required="required"
                            ng-minlength="5"
                            ng-maxlength="20"
-                           >
+                           ng-pattern="/^[a-zA-Z0-9!@#$%^&*]{5,20}$/">
                     <p>
                         <span ng-show="registerForm.username.$touched
                                     && registerForm.username.$invalid" style="color: red">
