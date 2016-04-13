@@ -794,6 +794,9 @@
                 sendResult({
                     id: user.id,
                     lastScore: score
+                }).then(function(response){
+                    identity.removeUser();
+                    identity.setUser(response);
                 });
             }
 

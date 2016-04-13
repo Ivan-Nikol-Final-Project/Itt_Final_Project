@@ -28,7 +28,7 @@
             .then(function (response) {
 
                 vm.user = {
-                    highScore: 0
+                    highScore: response.statistic.high_score
                 }
             });
 

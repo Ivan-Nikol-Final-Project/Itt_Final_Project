@@ -3,6 +3,7 @@
 
     function LoginController($location, auth) {
         var vm = this;
+        vm.errorLogin = false;
 
         vm.login = function(user, loginForm) {
             console.log(user);
@@ -10,6 +11,10 @@
                 auth.login(user)
                    .then(function(){
                        $location.path('/');
+                       vm.errorLogin = false;
+                   }, function() {
+                       vm.errorLogin = true;
+                       $location.path('/identity/login');
                    });
             }
         }

@@ -19,7 +19,6 @@
         }
 
         function sendRequestPayPall(response) {
-            console.log(response);
             var formId = 'form' + response.order_value;
             document.getElementById(formId).submit();
         }

@@ -5,13 +5,12 @@
         var vm = this;
 
         vm.buyGold = function(item) {
-            console.log('buy gold');
-
             identity.getUser()
                 .then(function(user){
                     shop.buy(item, user)
                         .then(function(response){
                             vm.id = response.id;
+                            console.log(vm.id);
                             shop.sendRequestPayPall(response);
 
                             console.log(response);

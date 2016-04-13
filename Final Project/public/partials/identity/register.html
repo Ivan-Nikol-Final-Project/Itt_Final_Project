@@ -4,41 +4,40 @@
         <form class="form" name="registerForm">
             <fieldset>
                 <legend style="color: white">Register</legend>
-                <div class="form-group">
+                <div class="form-group" ng-class="{
+                    error: registerForm.username.$touched
+                                    && registerForm.username.$invalid
+                }">
                     <label for="username" class="control-label">
                         Username
                     </label>
                     <input type="text" ng-model="user.username"
                            name="username" class="form-control"
-                           id="username" placeholder="Username is required"
+                           id="username" placeholder="required"
                            required="required"
+                           ng-minlength="5"
+                           ng-maxlength="20"
                            >
-
                     <p>
                         <span ng-show="registerForm.username.$touched
                                     && registerForm.username.$invalid" style="color: red">
-                            Username is required.
-                        </span>
-                        <span ng-show="user.username.length < 5 && registerForm.username.$touched"
-                              style="color: red">
-                            Username should be at least 5 characters.
-                        </span>
-                        <!--<span ng-show="registerForm.username.$untouched
-                                        && registerForm.username.$invalid">
                             Username is required and should be at least 5 characters.
-                        </span>-->
+                        </span>
                     </p>
 
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-class="{
+                    error: registerForm.email.$touched
+                                        && registerForm.email.$invalid
+                }">
                     <label for="inputEmail" class="control-label">Email</label>
                     <input
-                            type="text"
+                            type="email"
                             ng-model="user.email"
                             name="email"
                             class="form-control"
                             id="inputEmail"
-                            placeholder="Email is required"
+                            placeholder="required"
                             required="required"
                             ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z]{2,5}$/">
                     <p>
@@ -47,14 +46,13 @@
                                         style="color: red">
                             Please enter a valid email address!
                         </span>
-                        <!--<span ng-show="registerForm.email.$untouched
-                                        && registerForm.email.$invalid">
-                            Email is required.
-                        </span>-->
                     </p>
 
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-class="{
+                    error: registerForm.password.$touched
+                                    && registerForm.password.$invalid
+                }">
                     <label for="inputPassword" class="control-label">Password</label>
                     <input
                             type="password"
@@ -62,7 +60,7 @@
                             name="password"
                             class="form-control"
                             id="inputPassword"
-                            placeholder="Password is required"
+                            placeholder="required"
                             required="required"
                             ng-pattern="/^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9]{6,}$/">
                     <p>
@@ -71,19 +69,19 @@
                                     style="color: red">
                             Password should contain at least one digit, one lower case, one upper case and 6 from the mentioned characters.
                         </span>
-                        <!--<span ng-show="registerForm.password.$untouched
-                                    && registerForm.password.$invalid">
-                            Password is required and should contain at least one digit, one lower case, one upper case and 6 from the mentioned characters.
-                        </span>-->
                     </p>
 
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-class="{
+                    error: (registerForm.confirmPassword.$touched
+                            && registerForm.confirmPassword.$invalid)
+                            || (user.password != user.confirmPassword && registerForm.confirmPassword.$touched)
+                }">
                     <label for="confirmPassword" class="control-label">Confirm Password</label>
                     <input type="password"
                            ng-model="user.confirmPassword"
                            name="confirmPassword" class="form-control"
-                           id="confirmPassword" placeholder="Confirmation Password is required"
+                           id="confirmPassword" placeholder="required"
                            required="required">
                     <p>
                         <span ng-show="(registerForm.confirmPassword.$touched
@@ -92,10 +90,6 @@
                                         style="color: red">
                             Your password and confirmation password do not match.
                         </span>
-                        <!--<span ng-show="registerForm.confirmPassword.$untouched
-                                        && registerForm.confirmPassword.$invalid">
-                            Confirmation Password is required.
-                        </span>-->
                     </p>
                 </div>
                 <div class="form-group">

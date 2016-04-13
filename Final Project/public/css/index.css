@@ -120,5 +120,18 @@ form {
     padding: 1em 3em;
     background-color: rgba(41,46,52,0.3);
 }
+.form-group input {
+    background-color: rgba(41,46,52,0.3);
+    border: 1px solid grey;
+    color: white;
+    -webkit-box-shadow: none;
+    outline: -webkit-focus-ring-color auto 0px;
+}
+
+table {
+    border: 1px solid grey;
+    padding: 1em 3em;
+    background-color: rgba(41,46,52,0.5);
+}
 
 
