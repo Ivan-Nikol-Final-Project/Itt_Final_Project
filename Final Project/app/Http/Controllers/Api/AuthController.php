@@ -36,13 +36,11 @@ class AuthController extends Controller
         $data = $request->all();
         $data['password'] = bcrypt($data['password']);
         $data['gold'] = 1000;
-        $data['api_token'] = md5(microtime(true));
-       
+        $data['api_token'] = md5(microtime(true));       
 
         $user = User::create($data);
         $statistic['user_id'] = $user['id'];
         $statistic = Statistic::create($statistic);        
         return $user;
     }
-
 }

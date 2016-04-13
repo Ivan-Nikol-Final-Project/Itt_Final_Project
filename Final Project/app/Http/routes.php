@@ -10,25 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-//Blade::setContentTags('<%', '%>');        // for variables and all things Blade
-//Blade::setEscapedContentTags('<%%', '%%>');
-
-Route::group([
-    'prefix' => 'api/v1',
-    'middleware' => 'api'
-], function () {
-    Route::get('/users', 'UserController@index');
-
-    Route::post('success', 'PaymentController@updateOrder');
-    Route::get('/scores' , 'StatisticsController@index');
-    Route::post('/payment' , 'PaymentController@addOrder');
-
-
-
-
-});
-
     Route::group([
         'prefix' => 'api/v1',
         'middleware' => 'api',
@@ -36,10 +17,11 @@ Route::group([
     ], function () {
         Route::post('/login', 'AuthController@login');
         Route::post('/register', 'AuthController@registration');
-        Route::put('/update/results' , 'UpdateStatisticsController@update');
         Route::post('get/user', 'UserController@getUser');
-
-       
+        Route::post('success', 'PaymentController@updateOrder');
+        Route::post('/payment' , 'PaymentController@addOrder');
+        Route::put('/update/results' , 'StatisticsController@update');
+        Route::get('/scores' , 'StatisticsController@index');
     });
 
 Route::get('/', function () {

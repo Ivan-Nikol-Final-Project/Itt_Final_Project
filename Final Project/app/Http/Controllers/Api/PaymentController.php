@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 use App\Payment;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use Illuminate\Support\Facades\Response;
+use App\Http\Controllers\Controller;
+
 
 
 class PaymentController extends Controller
@@ -41,7 +42,5 @@ class PaymentController extends Controller
             return response(['ERROR' => ['Payment has failed']]);
         }
     }
-
-
 
 }
