@@ -31,16 +31,20 @@ class AuthController extends Controller
             'username' => 'required|min:5',
             'password' => 'required|min:6',
             'password2' => 'required|same:password',
-        ] );
+        ]);
 
         $data = $request->all();
         $data['password'] = bcrypt($data['password']);
         $data['gold'] = 1000;
-        $data['api_token'] = md5(microtime(true));       
+        $data['api_token'] = md5(microtime(true));
 
         $user = User::create($data);
         $statistic['user_id'] = $user['id'];
-        $statistic = Statistic::create($statistic);        
+        $statistic = Statistic::create($statistic);
+
+        $user = User::with('statistic')
+            ->where('username', '=', $request->username)->first();
         return $user;
     }
+
 }
