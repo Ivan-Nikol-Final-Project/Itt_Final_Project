@@ -46,39 +46,12 @@
         var getUser = function() {
             var deferred = $q.defer();
 
-            $http.post(baseUrl + 'api/v1/get/user')
+            $http.post(baseUrl + 'api/v1/get/user', {
+                api_token: $cookies.get(TOKEN_KEY)
+            })
                 .then(function (response) {
-                   /* var tokenValue = response.data.api_token;
-
-                    var theBigDay = new Date();
-                    theBigDay.setHours(theBigDay.getHours() + 72);
-
-                    $cookies.put(TOKEN_KEY, tokenValue, { expires: theBigDay });
-
-                    $http.defaults.headers.common.Authorization = 'X-Api-Token ' + tokenValue;*/
 
                     identity.removeUser();
-                    identity.setUser(response);
-                    deferred.resolve(response);
-
-                }, function (err) {
-                    deferred.reject(err);
-                });
-
-
-            return deferred.promise;
-
-            $http.get(baseUrl + '/api/v1/login', {username: user.username, password: user.password })
-                .then(function (response) {
-                    var tokenValue = response.data.api_token;
-
-                    var theBigDay = new Date();
-                    theBigDay.setHours(theBigDay.getHours() + 72);
-
-                    $cookies.put(TOKEN_KEY, tokenValue, { expires: theBigDay });
-
-                    $http.defaults.headers.common.Authorization = 'X-Api-Token ' + tokenValue;
-
                     identity.setUser(response);
                     deferred.resolve(response);
 
@@ -92,6 +65,7 @@
 
         return {
             register: register,
+            getUser: getUser,
             login: login,
             isAuthenticated: function () {
                 return !!$cookies.get(TOKEN_KEY);
