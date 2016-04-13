@@ -8,13 +8,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\User;
 
-
-
 class AuthController extends Controller
 {
     public function login(Request $request)
     {
-       // dd($request);
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required',
@@ -34,8 +31,6 @@ class AuthController extends Controller
             'username' => 'required|min:5',
             'password' => 'required|min:6',
             'password2' => 'required|same:password',
-
-
         ] );
 
         $data = $request->all();
@@ -47,14 +42,6 @@ class AuthController extends Controller
         $user = User::create($data);
         $statistic['user_id'] = $user['id'];
         $statistic = Statistic::create($statistic);        
-        return $user;
-
-    }
-
-    public function getUser(Request $request)
-    {
-        $token = $request->apiToken;
-        $user = User::where('apiToken', '=' , $token)->first();
         return $user;
     }
 

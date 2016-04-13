@@ -19,14 +19,13 @@ Route::group([
     'middleware' => 'api'
 ], function () {
     Route::get('/users', 'UserController@index');
-    Route::get('/users/{user_id}' , 'UserController@show');
-    Route::get('payment/{payment_id}', 'PaymentController@getSuccessPayment');
+
+    Route::post('success', 'PaymentController@updateOrder');
     Route::get('/scores' , 'StatisticsController@index');
     Route::post('/payment' , 'PaymentController@addOrder');
-    Route::get('/payment_success', 'PaymentController@getSuccessPayment');
-    Route::get('/cancel_order', function(){
-        return redirect('index');
-    });
+
+
+
 
 });
 
@@ -38,13 +37,14 @@ Route::group([
         Route::post('/login', 'AuthController@login');
         Route::post('/register', 'AuthController@registration');
         Route::put('/update/results' , 'UpdateStatisticsController@update');
+        Route::post('get/user', 'UserController@getUser');
 
-       // Route::post('/game', 'AuthController@getUser');
+       
     });
 
-    Route::get('/', function () {
-        return view('index');
-    });
+Route::get('/', function () {
+    return view('index');
+});
 
     Route::auth();
 
