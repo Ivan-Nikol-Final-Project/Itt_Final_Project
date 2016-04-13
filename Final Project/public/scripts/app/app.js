@@ -37,6 +37,11 @@
                 controller: 'ShopController',
                 controllerAs: CONTROLLER_VIEW_MODEL_NAME
             })
+            .when('/paypall', {
+                templateUrl: 'partials/payPall/pay-pall.html',
+                controller: 'PayPallController',
+                controllerAs: CONTROLLER_VIEW_MODEL_NAME
+            })
             .otherwise({ redirectTo: '/'})
     }
 
