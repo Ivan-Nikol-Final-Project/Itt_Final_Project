@@ -46,11 +46,11 @@
         var getUser = function() {
             var deferred = $q.defer();
 
-            $http.post(baseUrl + 'api/v1/get/user', {
+            $http.post(baseUrl + '/api/v1/get/user', {
                 api_token: $cookies.get(TOKEN_KEY)
             })
                 .then(function (response) {
-
+                    console.log(response);
                     identity.removeUser();
                     identity.setUser(response);
                     deferred.resolve(response);
